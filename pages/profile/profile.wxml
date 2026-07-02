@@ -10,11 +10,11 @@
             <view class="mini-user"></view>
           </view>
         </view>
-        <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar"></button>
       </view>
       <view class="user-info">
-        <input class="nickname" type="nickname" value="{{userInfo.nickName}}" placeholder="点击获取昵称" adjust-position bindinput="onNicknameInput" bindblur="onNicknameInput" />
-        <view class="signature">{{userInfo.signature}}</view>
+        <input id="nicknameInput" class="nickname-input" type="nickname" value="{{userInfo.nickName}}" placeholder="点击一键授权" focus="{{nicknameFocus}}" bindinput="onNicknameInput" bindblur="onNicknameInput" />
+        <button id="avatarBtn" class="auth-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">一键授权</button>
+
       </view>
     </view>
   </view>
