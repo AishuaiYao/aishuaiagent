@@ -3,16 +3,17 @@
   <view class="header">
     <view class="header-bg"></view>
     <view class="user-card">
-      <view class="avatar">
-        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+      <view class="avatar-wrap">
+        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="scaleToFill" />
         <view wx:else class="avatar-default">
           <view class="default-icon">
             <view class="mini-user"></view>
           </view>
         </view>
+        <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar"></button>
       </view>
       <view class="user-info">
-        <view class="nickname">{{userInfo.nickName}}</view>
+        <input class="nickname" type="nickname" value="{{userInfo.nickName}}" placeholder="点击获取昵称" adjust-position bindinput="onNicknameInput" bindblur="onNicknameInput" />
         <view class="signature">{{userInfo.signature}}</view>
       </view>
     </view>

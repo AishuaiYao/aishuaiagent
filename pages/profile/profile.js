@@ -10,5 +10,15 @@ Page({
       { num: 0, label: '收藏' },
       { num: 0, label: '关注' }
     ]
+  },
+  onChooseAvatar(e) {
+    this.setData({
+      'userInfo.avatarUrl': e.detail.avatarUrl
+    })
+  },
+  onNicknameInput(e) {
+    this.setData({
+      'userInfo.nickName': e.detail.value
+    })
   }
 })
