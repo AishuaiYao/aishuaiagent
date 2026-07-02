@@ -1,37 +1,43 @@
-<view class="profile-page">
-  <!-- 顶部用户信息 -->
-  <view class="user-section">
-    <view class="user-info">
-      <image class="avatar" src="/images/avatar.png" mode="aspectFill"></image>
-      <view class="user-detail">
-        <text class="nickname">未登录</text>
-        <text class="signature">点击头像登录</text>
+<view class="profile">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-bg"></view>
+    <view class="user-card">
+      <view class="avatar">
+        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+        <view wx:else class="avatar-default">
+          <view class="default-icon">
+            <view class="mini-user"></view>
+          </view>
+        </view>
+      </view>
+      <view class="user-info">
+        <view class="nickname">{{userInfo.nickName}}</view>
+        <view class="signature">{{userInfo.signature}}</view>
       </view>
     </view>
   </view>
 
-  <!-- 功能列表 -->
-  <view class="menu-section">
-    <view class="menu-item" bindtap="onMenuTap" data-type="settings">
-      <view class="menu-left">
-        <text class="menu-icon">⚙️</text>
-        <text class="menu-text">设置</text>
-      </view>
-      <text class="arrow">›</text>
+  <!-- 数据统计 -->
+  <view class="stats">
+    <view class="stat-item" wx:for="{{stats}}" wx:key="label">
+      <view class="stat-num">{{item.num}}</view>
+      <view class="stat-label">{{item.label}}</view>
     </view>
-    <view class="menu-item" bindtap="onMenuTap" data-type="about">
-      <view class="menu-left">
-        <text class="menu-icon">ℹ️</text>
-        <text class="menu-text">关于我们</text>
-      </view>
-      <text class="arrow">›</text>
+  </view>
+
+  <!-- 设置项列表 -->
+  <view class="menu-group">
+    <view class="menu-item" wx:for="{{['我的对话','我的收藏','使用记录']}}" wx:key="*this">
+      <text class="menu-text">{{item}}</text>
+      <view class="menu-arrow"></view>
     </view>
-    <view class="menu-item" bindtap="onMenuTap" data-type="help">
-      <view class="menu-left">
-        <text class="menu-icon">❓</text>
-        <text class="menu-text">帮助与反馈</text>
-      </view>
-      <text class="arrow">›</text>
+  </view>
+
+  <view class="menu-group">
+    <view class="menu-item" wx:for="{{['账号设置','消息通知','帮助与反馈','关于我们']}}" wx:key="*this">
+      <text class="menu-text">{{item}}</text>
+      <view class="menu-arrow"></view>
     </view>
   </view>
 </view>

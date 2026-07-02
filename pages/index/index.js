@@ -1,5 +1,6 @@
 Page({
-  goToProfile() {
+  data: {},
+  goProfile() {
     wx.navigateTo({
       url: '/pages/profile/profile'
     })

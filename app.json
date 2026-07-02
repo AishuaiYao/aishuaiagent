@@ -4,6 +4,11 @@
     "pages/profile/profile"
   ],
   "window": {
-    "navigationBarTitleText": "爱帅助手"
-  }
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "AI智能助手",
+    "backgroundColor": "#f5f5f7"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }

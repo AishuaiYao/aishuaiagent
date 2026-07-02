@@ -1,53 +1,150 @@
-.profile-page {
+.profile {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  padding-bottom: 40rpx;
 }
 
-.user-section {
-  background-color: #fff;
-  padding: 60rpx 30rpx;
-  margin-bottom: 20rpx;
+/* 头部 */
+.header {
+  position: relative;
+  height: 320rpx;
+  overflow: hidden;
 }
 
-.user-info {
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 280rpx;
+  background: linear-gradient(135deg, #007aff 0%, #5ac8fa 100%);
+}
+
+.user-card {
+  position: absolute;
+  top: 90rpx;
+  left: 40rpx;
+  right: 40rpx;
   display: flex;
   align-items: center;
 }
 
 .avatar {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 60rpx;
-  background-color: #eee;
-  margin-right: 30rpx;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4rpx solid #ffffff;
+  background: #ffffff;
+  flex-shrink: 0;
 }
 
-.user-detail {
+.avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-default {
+  width: 100%;
+  height: 100%;
+  background: #e9ecef;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.default-icon {
+  width: 64rpx;
+  height: 64rpx;
+  position: relative;
+}
+
+.mini-user::before {
+  content: "";
+  position: absolute;
+  top: 6rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: #adb5bd;
+}
+
+.mini-user::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 28rpx;
+  background: #adb5bd;
+  border-radius: 28rpx 28rpx 0 0;
+}
+
+.user-info {
+  margin-left: 28rpx;
+  color: #ffffff;
 }
 
 .nickname {
   font-size: 36rpx;
-  color: #333;
-  font-weight: 500;
-  margin-bottom: 10rpx;
+  font-weight: 600;
 }
 
 .signature {
-  font-size: 26rpx;
-  color: #999;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  opacity: 0.85;
 }
 
-.menu-section {
-  background-color: #fff;
+/* 数据统计 */
+.stats {
+  margin: -60rpx 24rpx 24rpx;
+  position: relative;
+  background: #ffffff;
+  border-radius: 20rpx;
+  display: flex;
+  padding: 32rpx 0;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.06);
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  border-right: 1rpx solid #f0f0f0;
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-num {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.stat-label {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #86868b;
+}
+
+/* 菜单列表 */
+.menu-group {
+  margin: 24rpx;
+  background: #ffffff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.04);
 }
 
 .menu-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30rpx;
+  padding: 32rpx 32rpx;
   border-bottom: 1rpx solid #f0f0f0;
 }
 
@@ -55,22 +152,15 @@
   border-bottom: none;
 }
 
-.menu-left {
-  display: flex;
-  align-items: center;
-}
-
-.menu-icon {
-  font-size: 40rpx;
-  margin-right: 20rpx;
-}
-
 .menu-text {
   font-size: 30rpx;
-  color: #333;
+  color: #1d1d1f;
 }
 
-.arrow {
-  font-size: 36rpx;
-  color: #ccc;
+.menu-arrow {
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 3rpx solid #c7c7cc;
+  border-right: 3rpx solid #c7c7cc;
+  transform: rotate(45deg);
 }

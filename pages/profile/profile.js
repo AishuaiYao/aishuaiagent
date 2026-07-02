@@ -1,9 +1,14 @@
 Page({
-  onMenuTap(e) {
-    const type = e.currentTarget.dataset.type
-    wx.showToast({
-      title: `点击了${type}`,
-      icon: 'none'
-    })
+  data: {
+    userInfo: {
+      nickName: '微信用户',
+      avatarUrl: '',
+      signature: '这个人很懒，什么都没留下'
+    },
+    stats: [
+      { num: 0, label: '对话' },
+      { num: 0, label: '收藏' },
+      { num: 0, label: '关注' }
+    ]
   }
 })
