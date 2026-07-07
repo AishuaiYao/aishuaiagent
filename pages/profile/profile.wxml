@@ -12,9 +12,10 @@
         </view>
       </view>
       <view class="user-info">
-        <input id="nicknameInput" class="nickname-input" type="nickname" value="{{userInfo.nickName}}" placeholder="点击一键授权" focus="{{nicknameFocus}}" bindinput="onNicknameInput" bindblur="onNicknameInput" />
-        <button id="avatarBtn" class="auth-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">一键授权</button>
-
+        <view class="input-wrap">
+          <input id="nicknameInput" class="nickname-input" type="nickname" value="{{userInfo.nickName}}" placeholder="点击一键授权" focus="{{nicknameFocus}}" bindinput="onNicknameInput" bindblur="onNicknameInput" />
+        </view>
+        <button wx:if="{{!userInfo.avatarUrl || !userInfo.nickName}}" id="avatarBtn" class="auth-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">一键授权</button>
       </view>
     </view>
   </view>
