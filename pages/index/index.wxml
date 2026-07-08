@@ -1,13 +1,70 @@
 <view class="container">
-  <view class="content">首页内容区</view>
+  <!-- 动态粒子背景 -->
+  <canvas type="2d" id="particleCanvas" class="particle-canvas"></canvas>
 
-  <!-- 底部个人中心按钮 -->
-  <view class="tabbar">
-    <view class="tab-item" bindtap="goProfile">
-      <view class="tab-icon">
-        <view class="icon-user"></view>
+  <!-- 背景渐变层 -->
+  <view class="bg-gradient"></view>
+  <view class="bg-grid"></view>
+
+  <!-- 主内容区 -->
+  <view class="main-content">
+    <!-- 顶部 Hero 区 -->
+    <view class="hero-section">
+      <view class="hero-badge">
+        <text class="badge-dot"></text>
+        <text class="badge-text">Powered by AI</text>
       </view>
-      <text class="tab-label">个人中心</text>
+      <view class="hero-title-wrap">
+        <text class="hero-title">AI 智能助手</text>
+        <view class="hero-glow"></view>
+      </view>
+      <text class="hero-subtitle">你的专属智能伙伴，让未来触手可及</text>
+    </view>
+
+    <!-- 功能卡片 -->
+    <view class="cards-section">
+      <view
+        class="feature-card card-{{index}} {{particlesReady ? 'card-show' : ''}}"
+        wx:for="{{features}}"
+        wx:key="title"
+        style="--card-delay: {{index * 0.08}}s; --card-color: {{item.color}}"
+      >
+        <view class="card-icon-wrap" style="background: {{item.color}}">
+          <text class="card-icon-emoji">{{item.icon}}</text>
+        </view>
+        <view class="card-body">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-desc">{{item.desc}}</text>
+        </view>
+        <view class="card-arrow">
+          <text class="arrow-icon">→</text>
+        </view>
+        <!-- 流光边框 -->
+        <view class="card-border-shine"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部导航条 -->
+  <view class="tabbar">
+    <view class="tabbar-inner">
+      <view class="tab-item tab-active">
+        <view class="tab-icon-wrap active-icon">
+          <text class="tab-emoji">🏠</text>
+        </view>
+        <text class="tab-label active-label">首页</text>
+      </view>
+      <view class="tab-center-btn" bindtap="goProfile">
+        <view class="center-btn-inner">
+          <text class="center-btn-icon">✨</text>
+        </view>
+      </view>
+      <view class="tab-item" bindtap="goProfile">
+        <view class="tab-icon-wrap">
+          <text class="tab-emoji">👤</text>
+        </view>
+        <text class="tab-label">个人中心</text>
+      </view>
     </view>
   </view>
 </view>
