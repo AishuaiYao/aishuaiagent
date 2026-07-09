@@ -4,10 +4,10 @@
     "pages/profile/profile"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#0a0a1a",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "AI智能助手",
-    "backgroundColor": "#f5f5f7"
+    "backgroundColor": "#0a0a1a"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

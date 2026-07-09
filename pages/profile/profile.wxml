@@ -1,45 +1,94 @@
-<view class="profile">
-  <!-- 头部区域 -->
-  <view class="header">
-    <view class="header-bg"></view>
-    <view class="user-card">
-      <view class="avatar-wrap">
-        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="scaleToFill" />
-        <view wx:else class="avatar-default">
-          <view class="default-icon">
-            <view class="mini-user"></view>
+<view class="container">
+  <!-- 动态粒子背景 -->
+  <canvas type="2d" id="particleCanvas" class="particle-canvas"></canvas>
+
+  <!-- 背景渐变层 + 网格 -->
+  <view class="bg-gradient"></view>
+  <view class="bg-grid"></view>
+
+  <!-- 主内容 -->
+  <view class="main-content">
+    <!-- 头像区 -->
+    <view class="avatar-section {{particlesReady ? 'avatar-show' : ''}}">
+      <view class="avatar-ring">
+        <view class="avatar-wrap">
+          <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="scaleToFill" />
+          <view wx:else class="avatar-default">
+            <text class="avatar-emoji">👤</text>
           </view>
         </view>
       </view>
-      <view class="user-info">
-        <view class="input-wrap">
-          <input id="nicknameInput" class="nickname-input" type="nickname" value="{{userInfo.nickName}}" placeholder="点击一键授权" focus="{{nicknameFocus}}" bindinput="onNicknameInput" bindblur="onNicknameInput" />
-        </view>
-        <button wx:if="{{!userInfo.avatarUrl || !userInfo.nickName}}" id="avatarBtn" class="auth-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">一键授权</button>
+      <view class="user-name-row">
+        <input id="nicknameInput" class="nickname-input" type="nickname" value="{{userInfo.nickName}}" placeholder="点击设置昵称" focus="{{nicknameFocus}}" bindinput="onNicknameInput" bindblur="onNicknameInput" />
+        <text class="edit-hint">✎</text>
       </view>
+      <text class="user-signature">{{userInfo.signature}}</text>
+      <button wx:if="{{!userInfo.avatarUrl || !userInfo.nickName}}" id="avatarBtn" class="auth-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <text class="auth-btn-text">一键授权登录</text>
+      </button>
+    </view>
+
+    <!-- 数据统计卡 -->
+    <view class="stats-card {{particlesReady ? 'card-show' : ''}}" style="--card-delay: 0.1s">
+      <view class="stats-row">
+        <view class="stat-item" wx:for="{{stats}}" wx:key="label">
+          <text class="stat-num">{{item.num}}</text>
+          <text class="stat-label">{{item.label}}</text>
+        </view>
+      </view>
+      <view class="card-border-shine"></view>
+    </view>
+
+    <!-- 菜单组 1 -->
+    <view class="menu-group {{particlesReady ? 'card-show' : ''}}" style="--card-delay: 0.2s">
+      <view class="menu-item" wx:for="{{menuGroup1}}" wx:key="title" hover-class="menu-hover">
+        <view class="menu-icon-wrap" style="background: {{item.color}}">
+          <text class="menu-icon-emoji">{{item.icon}}</text>
+        </view>
+        <text class="menu-text">{{item.title}}</text>
+        <text class="menu-arrow">→</text>
+      </view>
+      <view class="card-border-shine"></view>
+    </view>
+
+    <!-- 菜单组 2 -->
+    <view class="menu-group {{particlesReady ? 'card-show' : ''}}" style="--card-delay: 0.3s">
+      <view class="menu-item" wx:for="{{menuGroup2}}" wx:key="title" hover-class="menu-hover">
+        <view class="menu-icon-wrap" style="background: {{item.color}}">
+          <text class="menu-icon-emoji">{{item.icon}}</text>
+        </view>
+        <text class="menu-text">{{item.title}}</text>
+        <text class="menu-arrow">→</text>
+      </view>
+      <view class="card-border-shine"></view>
+    </view>
+
+    <!-- 退出按钮 -->
+    <view class="logout-btn {{particlesReady ? 'card-show' : ''}}" style="--card-delay: 0.4s">
+      <text class="logout-text">退出登录</text>
     </view>
   </view>
 
-  <!-- 数据统计 -->
-  <view class="stats">
-    <view class="stat-item" wx:for="{{stats}}" wx:key="label">
-      <view class="stat-num">{{item.num}}</view>
-      <view class="stat-label">{{item.label}}</view>
-    </view>
-  </view>
-
-  <!-- 设置项列表 -->
-  <view class="menu-group">
-    <view class="menu-item" wx:for="{{['我的对话','我的收藏','使用记录']}}" wx:key="*this">
-      <text class="menu-text">{{item}}</text>
-      <view class="menu-arrow"></view>
-    </view>
-  </view>
-
-  <view class="menu-group">
-    <view class="menu-item" wx:for="{{['账号设置','消息通知','帮助与反馈','关于我们']}}" wx:key="*this">
-      <text class="menu-text">{{item}}</text>
-      <view class="menu-arrow"></view>
+  <!-- 底部导航条（与首页一致） -->
+  <view class="tabbar">
+    <view class="tabbar-inner">
+      <view class="tab-item" bindtap="goIndex">
+        <view class="tab-icon-wrap">
+          <text class="tab-emoji">🏠</text>
+        </view>
+        <text class="tab-label">首页</text>
+      </view>
+      <view class="tab-center-btn">
+        <view class="center-btn-inner">
+          <text class="center-btn-icon">✨</text>
+        </view>
+      </view>
+      <view class="tab-item tab-active">
+        <view class="tab-icon-wrap active-icon">
+          <text class="tab-emoji">👤</text>
+        </view>
+        <text class="tab-label active-label">个人中心</text>
+      </view>
     </view>
   </view>
 </view>
