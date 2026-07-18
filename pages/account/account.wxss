@@ -87,25 +87,6 @@
   font-size: 24rpx;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
-  color: #FFFFFF;
-  border-radius: 50rpx;
-  border: none;
-  font-weight: 600;
-  font-size: 28rpx;
-  padding: 20rpx 48rpx;
-  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
-}
-
-.btn-primary::after {
-  border: none;
-}
-
-.btn-primary:active {
-  transform: scale(0.95);
-}
-
 .section {
   margin-top: 24rpx;
 }
@@ -167,4 +148,162 @@
 .btn-logout:active {
   transform: scale(0.95);
   box-shadow: var(--shadow-hover);
+}
+
+/* ===== 注册弹窗 ===== */
+.register-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: maskIn 0.3s ease;
+}
+
+@keyframes maskIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.register-popup {
+  width: 580rpx;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 48rpx 40rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: popupIn 0.35s ease;
+}
+
+@keyframes popupIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.register-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1A2A3A;
+  margin-bottom: 8rpx;
+}
+
+.register-desc {
+  font-size: 26rpx;
+  color: #8A9BAA;
+  margin-bottom: 36rpx;
+}
+
+/* 头像选择按钮 */
+.avatar-btn {
+  width: 160rpx;
+  height: 160rpx;
+  padding: 0;
+  margin: 0 0 32rpx 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-btn::after {
+  border: none;
+}
+
+.avatar-preview {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid #A8D8EA;
+  box-shadow: 0 4px 16px rgba(168, 216, 234, 0.25);
+}
+
+.avatar-placeholder {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 3rpx dashed #C0C8D0;
+  background: #F5F9FC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder-icon {
+  font-size: 48rpx;
+  margin-bottom: 4rpx;
+}
+
+.avatar-placeholder-text {
+  font-size: 20rpx;
+  color: #8A9BAA;
+}
+
+/* 昵称输入 */
+.nickname-wrap {
+  width: 100%;
+  margin-bottom: 32rpx;
+}
+
+.nickname-input {
+  width: 100%;
+  height: 88rpx;
+  background: #F5F9FC;
+  border-radius: 24rpx;
+  padding: 0 28rpx;
+  font-size: 30rpx;
+  color: #1A2A3A;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.nickname-input::placeholder {
+  color: #C0C8D0;
+}
+
+/* 注册按钮 */
+.btn-register {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 50rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.2);
+  margin-bottom: 20rpx;
+}
+
+.btn-register::after {
+  border: none;
+}
+
+.btn-register:active {
+  transform: scale(0.95);
+}
+
+.btn-register[disabled] {
+  opacity: 0.7;
+}
+
+.register-skip {
+  font-size: 26rpx;
+  color: #8A9BAA;
+  padding: 8rpx 16rpx;
+}
+
+.register-skip:active {
+  color: #A8D8EA;
 }
