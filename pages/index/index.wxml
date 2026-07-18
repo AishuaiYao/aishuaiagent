@@ -1,70 +1,105 @@
-<view class="container">
-  <!-- 动态粒子背景 -->
-  <canvas type="2d" id="particleCanvas" class="particle-canvas"></canvas>
-
-  <!-- 背景渐变层 -->
-  <view class="bg-gradient"></view>
-  <view class="bg-grid"></view>
-
-  <!-- 主内容区 -->
-  <view class="main-content">
-    <!-- 顶部 Hero 区 -->
-    <view class="hero-section">
-      <view class="hero-badge">
-        <text class="badge-dot"></text>
-        <text class="badge-text">Powered by AI</text>
+<!-- 首页 -->
+<view class="page-container">
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-bar-left" bind:tap="openDrawer">
+      <view class="hamburger">
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
       </view>
-      <view class="hero-title-wrap">
-        <text class="hero-title">AI 智能助手</text>
-        <view class="hero-glow"></view>
-      </view>
-      <text class="hero-subtitle">你的专属智能伙伴，让未来触手可及</text>
     </view>
+    <view class="nav-bar-title">宝宝成长度量</view>
+    <view class="nav-bar-right"></view>
+  </view>
 
-    <!-- 功能卡片 -->
-    <view class="cards-section">
+  <!-- 当前宝宝信息 -->
+  <view class="baby-header card">
+    <view class="baby-avatar-wrap" wx:if="{{currentBaby}}">
+      <view class="baby-avatar">{{currentBaby.gender === 'male' ? '👦' : currentBaby.gender === 'female' ? '👧' : '👶'}}</view>
+    </view>
+    <view class="baby-info" wx:if="{{currentBaby}}">
+      <text class="baby-name">{{currentBaby.name}}</text>
+      <text class="baby-age">{{babyAge}}个月</text>
+    </view>
+    <view class="baby-none" wx:else>
+      <text class="baby-none-text" bind:tap="goBabies">点击添加宝宝 →</text>
+    </view>
+  </view>
+
+  <!-- 欢迎语 -->
+  <view class="welcome-text">今天想测测宝宝的什么呢？✨</view>
+
+  <!-- 快捷测试入口 -->
+  <view class="quick-tests">
+    <scroll-view scroll-x class="quick-scroll" show-scrollbar="{{false}}">
+      <view class="quick-cards">
+        <view class="quick-card attention" bind:tap="goQuiz" data-type="attention">
+          <text class="quick-icon">🔍</text>
+          <text class="quick-name">注意力测试</text>
+          <text class="quick-desc">评估专注力水平</text>
+        </view>
+        <view class="quick-card attachment" bind:tap="goQuiz" data-type="attachment">
+          <text class="quick-icon">💕</text>
+          <text class="quick-name">亲子依恋测试</text>
+          <text class="quick-desc">了解亲密关系</text>
+        </view>
+        <view class="quick-card temperament" bind:tap="goQuiz" data-type="temperament">
+          <text class="quick-icon">🌈</text>
+          <text class="quick-name">气质类型测试</text>
+          <text class="quick-desc">发现天生性格</text>
+        </view>
+        <view class="quick-card more" bind:tap="goTests">
+          <text class="quick-icon">📋</text>
+          <text class="quick-name">更多测试</text>
+          <text class="quick-desc">查看全部 →</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 最近记录 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">最近记录</text>
+      <text class="section-more" bind:tap="goDashboard" wx:if="{{recentRecords.length > 0}}">查看全部 →</text>
+    </view>
+    <view class="record-list" wx:if="{{recentRecords.length > 0}}">
       <view
-        class="feature-card card-{{index}} {{particlesReady ? 'card-show' : ''}}"
-        wx:for="{{features}}"
-        wx:key="title"
-        style="--card-delay: {{index * 0.08}}s; --card-color: {{item.color}}"
+        class="record-item card"
+        wx:for="{{recentRecords}}"
+        wx:key="_id"
+        bind:tap="goResult"
+        data-id="{{item._id}}"
+        data-type="{{item.testType}}"
       >
-        <view class="card-icon-wrap" style="background: {{item.color}}">
-          <text class="card-icon-emoji">{{item.icon}}</text>
+        <view class="record-left">
+          <text class="record-icon">
+            {{item.testType === 'attention' ? '🔍' : item.testType === 'attachment' ? '💕' : '🌈'}}
+          </text>
+          <view class="record-info">
+            <text class="record-name">{{item.testType === 'attention' ? '注意力测试' : item.testType === 'attachment' ? '亲子依恋测试' : '气质类型测试'}}</text>
+            <text class="record-date">{{item.completedAtStr}}</text>
+          </view>
         </view>
-        <view class="card-body">
-          <text class="card-title">{{item.title}}</text>
-          <text class="card-desc">{{item.desc}}</text>
+        <view class="record-right">
+          <text class="record-summary">{{item.summary || '查看详情'}}</text>
+          <text class="record-arrow">→</text>
         </view>
-        <view class="card-arrow">
-          <text class="arrow-icon">→</text>
-        </view>
-        <!-- 流光边框 -->
-        <view class="card-border-shine"></view>
       </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">还没有测试记录</text>
+      <text class="empty-desc">选一个测试开始了解宝宝吧~</text>
     </view>
   </view>
 
-  <!-- 底部导航条 -->
-  <view class="tabbar">
-    <view class="tabbar-inner">
-      <view class="tab-item tab-active">
-        <view class="tab-icon-wrap active-icon">
-          <text class="tab-emoji">🏠</text>
-        </view>
-        <text class="tab-label active-label">首页</text>
-      </view>
-      <view class="tab-center-btn" bindtap="goProfile">
-        <view class="center-btn-inner">
-          <text class="center-btn-icon">✨</text>
-        </view>
-      </view>
-      <view class="tab-item" bindtap="goProfile">
-        <view class="tab-icon-wrap">
-          <text class="tab-emoji">👤</text>
-        </view>
-        <text class="tab-label">个人中心</text>
-      </view>
-    </view>
-  </view>
+  <!-- 导航抽屉 -->
+  <nav-drawer
+    visible="{{drawerVisible}}"
+    currentPath="/pages/index/index"
+    bind:close="closeDrawer"
+    bind:navigate="onNavigate"
+  ></nav-drawer>
 </view>

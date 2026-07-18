@@ -2,6 +2,6 @@
   "usingComponents": {
     "nav-drawer": "/components/nav-drawer/nav-drawer"
   },
-  "navigationBarTitleText": "宝宝成长度量",
+  "navigationBarTitleText": "我的宝宝",
   "navigationStyle": "custom"
 }

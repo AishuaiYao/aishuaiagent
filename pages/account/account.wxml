@@ -1,0 +1,63 @@
+<!-- 我的账号页 -->
+<view class="page-container">
+  <view class="nav-bar">
+    <view class="nav-bar-left" bind:tap="openDrawer">
+      <view class="hamburger">
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+      </view>
+    </view>
+    <view class="nav-bar-title">我的账号</view>
+    <view class="nav-bar-right"></view>
+  </view>
+
+  <view class="account-card card" wx:if="{{userInfo}}">
+    <view class="account-avatar" wx:if="{{userInfo.avatarUrl}}">
+      <image src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+    </view>
+    <view class="account-avatar default" wx:else>
+      <text>👤</text>
+    </view>
+    <text class="account-name">{{userInfo.nickName || '宝宝家长'}}</text>
+    <text class="account-phone" wx:if="{{userInfo.phone}}">{{maskPhone(userInfo.phone)}}</text>
+    <text class="account-phone hint" wx:else>未绑定手机号</text>
+  </view>
+
+  <view class="account-card card" wx:else>
+    <view class="account-avatar default">
+      <text>👤</text>
+    </view>
+    <text class="account-name">未登录</text>
+    <text class="account-phone hint">点击登录同步数据</text>
+    <button class="btn-primary" style="margin-top: 24rpx;" bind:tap="handleLogin" wx:if="{{!userInfo}}">微信一键登录</button>
+  </view>
+
+  <view class="section">
+    <view class="menu-list">
+      <view class="menu-item">
+        <text class="menu-text">用户ID</text>
+        <text class="menu-value">{{userInfo ? (userInfo._id || '未获取') : '-'}}</text>
+      </view>
+      <view class="menu-item">
+        <text class="menu-text">版本号</text>
+        <text class="menu-value">v1.0.0</text>
+      </view>
+      <view class="menu-item">
+        <text class="menu-text">关于我们</text>
+        <text class="menu-value">宝宝成长度量</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="logout-wrap" wx:if="{{userInfo}}">
+    <button class="btn-logout" bind:tap="handleLogout">退出登录</button>
+  </view>
+
+  <nav-drawer
+    visible="{{drawerVisible}}"
+    currentPath="/pages/account/account"
+    bind:close="closeDrawer"
+    bind:navigate="onNavigate"
+  ></nav-drawer>
+</view>

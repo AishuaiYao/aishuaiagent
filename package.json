@@ -1,5 +1,8 @@
 {
   "name": "aishuaiagent",
   "version": "1.0.0",
-  "description": "AI智能助手小程序"
+  "description": "宝宝成长度量小程序 - 0-6岁宝宝发展维度测评工具",
+  "dependencies": {
+    "echarts-for-weixin": "^1.0.2"
+  }
 }

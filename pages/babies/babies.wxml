@@ -1,0 +1,91 @@
+<!-- 我的宝宝页 -->
+<view class="page-container">
+  <view class="nav-bar">
+    <view class="nav-bar-left" bind:tap="openDrawer">
+      <view class="hamburger">
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+      </view>
+    </view>
+    <view class="nav-bar-title">我的宝宝</view>
+    <view class="nav-bar-right" bind:tap="showAddForm">+ 添加</view>
+  </view>
+
+  <!-- 宝宝列表 -->
+  <view class="baby-list" wx:if="{{babies.length > 0}}">
+    <view class="baby-card card {{item.isCurrent ? 'current' : ''}}" wx:for="{{babies}}" wx:key="_id">
+      <view class="baby-card-main">
+        <view class="bc-avatar">
+          <text>{{item.gender === 'male' ? '👦' : item.gender === 'female' ? '👧' : '👶'}}</text>
+        </view>
+        <view class="bc-info">
+          <view class="bc-name-row">
+            <text class="bc-name">{{item.name}}</text>
+            <text class="bc-tag" wx:if="{{item.isCurrent}}">当前</text>
+          </view>
+          <text class="bc-detail">{{calcAge(item.birthday)}}个月 · {{item.gender === 'male' ? '男宝宝' : item.gender === 'female' ? '女宝宝' : '未设置'}}</text>
+          <text class="bc-note" wx:if="{{item.note}}">{{item.note}}</text>
+        </view>
+      </view>
+      <view class="baby-card-actions">
+        <text class="bc-action" bind:tap="switchBaby" data-id="{{item._id}}" wx:if="{{!item.isCurrent}}">设为当前</text>
+        <text class="bc-action" bind:tap="editBaby" data-id="{{item._id}}" data-item="{{item}}">编辑</text>
+        <text class="bc-action danger" bind:tap="deleteBaby" data-id="{{item._id}}" data-name="{{item.name}}">删除</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">👶</text>
+    <text class="empty-text">还没有添加宝宝</text>
+    <text class="empty-desc">添加宝宝后就可以开始测试啦~</text>
+    <button class="btn-primary btn-small" style="margin-top: 20rpx;" bind:tap="showAddForm">添加宝宝</button>
+  </view>
+
+  <!-- 添加/编辑弹窗 -->
+  <view class="modal-mask {{showForm ? 'show' : ''}}" bind:tap="hideForm"></view>
+  <view class="modal {{showForm ? 'show' : ''}}">
+    <view class="modal-header">
+      <text class="modal-title">{{editingBaby ? '编辑宝宝' : '添加宝宝'}}</text>
+      <text class="modal-close" bind:tap="hideForm">✕</text>
+    </view>
+    <view class="modal-body">
+      <view class="form-item">
+        <text class="form-label">宝宝昵称</text>
+        <input class="form-input" placeholder="请输入宝宝小名" value="{{formData.name}}" bindinput="onFormInput" data-key="name" maxlength="10"/>
+      </view>
+      <view class="form-item">
+        <text class="form-label">出生日期</text>
+        <picker mode="date" value="{{formData.birthday}}" end="{{today}}" bindchange="onDateChange">
+          <view class="form-picker {{formData.birthday ? '' : 'placeholder'}}">
+            {{formData.birthday || '请选择出生日期'}}
+          </view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">性别</text>
+        <view class="gender-options">
+          <view class="gender-item {{formData.gender === 'male' ? 'selected' : ''}}" bind:tap="onGenderTap" data-gender="male">👦 男宝宝</view>
+          <view class="gender-item {{formData.gender === 'female' ? 'selected' : ''}}" bind:tap="onGenderTap" data-gender="female">👧 女宝宝</view>
+        </view>
+      </view>
+      <view class="form-item">
+        <text class="form-label">备注（选填）</text>
+        <input class="form-input" placeholder="如：早产、过敏源等" value="{{formData.note}}" bindinput="onFormInput" data-key="note" maxlength="50"/>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn-secondary" bind:tap="hideForm">取消</button>
+      <button class="btn-primary" bind:tap="saveBaby" disabled="{{!formData.name || !formData.birthday}}">保存</button>
+    </view>
+  </view>
+
+  <nav-drawer
+    visible="{{drawerVisible}}"
+    currentPath="/pages/babies/babies"
+    bind:close="closeDrawer"
+    bind:navigate="onNavigate"
+  ></nav-drawer>
+</view>

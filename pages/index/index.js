@@ -1,90 +1,113 @@
+const util = require('../../utils/util');
+const cloud = require('../../utils/cloud');
+const app = getApp();
+
 Page({
   data: {
-    features: [
-      { icon: '💬', title: '智能对话', desc: '自然流畅的多轮对话体验，懂你所想，答你所问', color: '#667eea' },
-      { icon: '🧠', title: '知识问答', desc: '海量知识库即时检索，精准回答各类专业问题', color: '#f093fb' },
-      { icon: '✍️', title: '内容创作', desc: '一键生成文案、报告、创意，释放你的创作力', color: '#4facfe' },
-      { icon: '📊', title: '数据分析', desc: '深度洞察数据价值，可视化呈现分析结果', color: '#43e97b' },
-      { icon: '🔍', title: '智能搜索', desc: '全网信息精准检索，快速找到你需要的答案', color: '#fa709a' },
-      { icon: '🎯', title: '个性化推荐', desc: '基于你的偏好，量身定制专属内容推荐', color: '#f5af19' }
-    ],
-    // Canvas 粒子
-    particlesReady: false
+    drawerVisible: false,
+    currentBaby: null,
+    babyAge: 0,
+    recentRecords: []
   },
 
-  onReady() {
-    this.initParticles()
-    // 卡片错峰入场
-    setTimeout(() => this.setData({ particlesReady: true }), 300)
+  async onShow() {
+    await this.loadBaby();
+    this.loadRecords();
   },
 
-  initParticles() {
-    const query = wx.createSelectorQuery()
-    query.select('#particleCanvas')
-      .fields({ node: true, size: true })
-      .exec((res) => {
-        if (!res[0]) return
-        const canvas = res[0].node
-        const ctx = canvas.getContext('2d')
-        const dpr = wx.getSystemInfoSync().pixelRatio
-        const w = res[0].width
-        const h = res[0].height
-        canvas.width = w * dpr
-        canvas.height = h * dpr
-        ctx.scale(dpr, dpr)
-
-        const particles = []
-        const count = 60
-        for (let i = 0; i < count; i++) {
-          particles.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            r: Math.random() * 2 + 0.8,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            alpha: Math.random() * 0.5 + 0.2
-          })
-        }
-
-        const animate = () => {
-          ctx.clearRect(0, 0, w, h)
-          particles.forEach((p, i) => {
-            p.x += p.vx
-            p.y += p.vy
-            if (p.x < 0 || p.x > w) p.vx *= -1
-            if (p.y < 0 || p.y > h) p.vy *= -1
-
-            ctx.beginPath()
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-            ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`
-            ctx.fill()
-
-            // 连线
-            for (let j = i + 1; j < count; j++) {
-              const dx = p.x - particles[j].x
-              const dy = p.y - particles[j].y
-              const dist = Math.sqrt(dx * dx + dy * dy)
-              if (dist < 100) {
-                ctx.beginPath()
-                ctx.moveTo(p.x, p.y)
-                ctx.lineTo(particles[j].x, particles[j].y)
-                ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / 100)})`
-                ctx.lineWidth = 0.5
-                ctx.stroke()
-              }
-            }
-          })
-          this._animId = canvas.requestAnimationFrame(animate)
-        }
-        animate()
-      })
+  /** 加载当前宝宝信息（从真实数据源校验） */
+  async loadBaby() {
+    // 从云端或本地存储获取真实的宝宝列表，而非仅信任缓存
+    let babies = [];
+    const userInfo = app.globalData.userInfo;
+    if (userInfo?._id) {
+      try {
+        babies = await cloud.getBabies(userInfo._id);
+      } catch (e) {
+        console.error('加载云端宝宝失败:', e);
+      }
+    } else {
+      babies = wx.getStorageSync('localBabies') || [];
+    }
+    // 找到当前选中的宝宝（优先 isCurrent，其次第一个）
+    const current = babies.find(b => b.isCurrent) || babies[0] || null;
+    if (current) {
+      const age = util.calcBabyAge(current.birthday);
+      this.setData({ currentBaby: current, babyAge: age });
+      app.setCurrentBaby(current);
+    } else {
+      this.setData({ currentBaby: null, babyAge: 0 });
+      // 清除可能过期的缓存
+      wx.removeStorageSync('currentBaby');
+      if (app.globalData.currentBaby) app.globalData.currentBaby = null;
+    }
   },
 
-  onUnload() {
-    if (this._animId) this._animId = null
+  /** 加载最近3条记录 */
+  async loadRecords() {
+    const baby = this.data.currentBaby;
+    if (!baby || !baby._id) return;
+    try {
+      const records = await cloud.getTestRecords(baby._id);
+      const recent = records.slice(0, 3).map(r => ({
+        ...r,
+        completedAtStr: util.formatDate(r.completedAt)
+      }));
+      this.setData({ recentRecords: recent });
+    } catch (e) {
+      console.error('加载记录失败:', e);
+    }
   },
 
-  goProfile() {
-    wx.navigateTo({ url: '/pages/profile/profile' })
+  /** 打开抽屉菜单 */
+  openDrawer() {
+    this.setData({ drawerVisible: true });
+  },
+
+  /** 关闭抽屉菜单 */
+  closeDrawer() {
+    this.setData({ drawerVisible: false });
+  },
+
+  /** 抽屉菜单导航 */
+  onNavigate(e) {
+    const { path } = e.detail;
+    if (path === '/pages/index/index') return;
+    wx.switchTab({ url: path }).catch(() => {
+      wx.navigateTo({ url: path }).catch(() => {
+        wx.redirectTo({ url: path });
+      });
+    });
+  },
+
+  /** 跳转全部测试页 */
+  goTests() {
+    wx.navigateTo({ url: '/pages/tests/tests' });
+  },
+
+  /** 进入答题 */
+  goQuiz(e) {
+    const type = e.currentTarget.dataset.type;
+    if (!this.data.currentBaby) {
+      util.showToast('请先添加宝宝信息');
+      return;
+    }
+    wx.navigateTo({ url: `/pages/test/quiz?type=${type}` });
+  },
+
+  /** 查看结果详情 */
+  goResult(e) {
+    const { id, type } = e.currentTarget.dataset;
+    wx.navigateTo({ url: `/pages/test/result?id=${id}&type=${type}` });
+  },
+
+  /** 跳转跟踪看板 */
+  goDashboard() {
+    wx.navigateTo({ url: '/pages/dashboard/dashboard' });
+  },
+
+  /** 跳转宝宝管理 */
+  goBabies() {
+    wx.navigateTo({ url: '/pages/babies/babies' });
   }
-})
+});

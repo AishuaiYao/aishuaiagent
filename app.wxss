@@ -1,5 +1,166 @@
+/* ============================================
+   宝宝成长度量 - 全局样式系统 v2.0
+   设计规范：轻量化软拟态 + 扁平化融合设计
+   ============================================ */
+
 page {
-  background-color: #f5f5f7;
+  /* 主色系 */
+  --primary: #A8D8EA;        /* 清冷蓝绿 */
+  --primary-light: #D6EEF5;  /* 浅蓝 */
+  --secondary: #FFD3B4;      /* 暖杏 */
+  --accent: #C7CEEA;         /* 淡紫灰 */
+  --accent-light: #E8EBF7;   /* 浅紫 */
+
+  /* 文字层级 */
+  --text-primary: #1A2A3A;
+  --text-secondary: #4A5B6E;
+  --text-light: #8A9BAA;
+
+  /* 背景与卡片 */
+  --white: #FFFFFF;
+  --bg: #F5F9FC;
+  --card-bg: rgba(255, 255, 255, 0.75);
+
+  /* 阴影 - 极轻柔 */
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+  /* 圆角 */
+  --radius: 24px;      /* 卡片/按钮大圆角 */
+  --radius-lg: 24px;   /* 同大圆角 */
+  --radius-sm: 12px;   /* 输入框/标签小圆角 */
+
+  /* 字体 */
+  --font-title: 36rpx;   /* 标题 18px */
+  --font-body: 30rpx;    /* 正文 15px */
+  --font-caption: 26rpx; /* 辅助 13px */
+
+  background-color: var(--bg);
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: #1d1d1f;
+  color: var(--text-primary);
+  font-size: var(--font-body);
+  line-height: 1.6;
+}
+
+/* ===== 通用卡片 ===== */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.card-hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* ===== 通用按钮 ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--white);
+  border-radius: 50rpx;
+  font-weight: 600;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+  border-radius: 50rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:active {
+  transform: scale(0.95);
+}
+
+.btn-small {
+  padding: 16rpx 40rpx;
+  font-size: var(--font-caption);
+}
+
+/* ===== 标签 ===== */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: var(--radius-sm);
+  font-size: 20rpx;
+  font-weight: 500;
+}
+
+.tag-green {
+  background: #D4EDDA;
+  color: #3A7D5A;
+}
+
+.tag-gray {
+  background: #F0F2F5;
+  color: var(--text-light);
+}
+
+.tag-primary {
+  background: var(--primary-light);
+  color: #5A9BAB;
+}
+
+/* ===== 空态 ===== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+}
+
+.empty-state .empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 24rpx;
+  opacity: 0.4;
+}
+
+.empty-state .empty-text {
+  color: var(--text-secondary);
+  font-size: var(--font-body);
+  margin-bottom: 32rpx;
+}
+
+/* ===== 骨架屏 ===== */
+.skeleton {
+  background: linear-gradient(90deg, #f0f2f5 25%, #e4e8ec 50%, #f0f2f5 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ===== 页面通用容器 ===== */
+.page-container {
+  padding: 0 24px;
+  padding-bottom: 32px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: var(--bg);
+}
+
+/* ===== 分割线 ===== */
+.divider {
+  height: 1rpx;
+  background: #E8ECF0;
+  margin: 16rpx 0;
 }

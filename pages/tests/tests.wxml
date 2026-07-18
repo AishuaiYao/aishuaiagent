@@ -1,0 +1,46 @@
+<!-- 全部测试页 -->
+<view class="page-container">
+  <view class="nav-bar">
+    <view class="nav-bar-left" bind:tap="openDrawer">
+      <view class="hamburger">
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+      </view>
+    </view>
+    <view class="nav-bar-title">全部测试</view>
+    <view class="nav-bar-right"></view>
+  </view>
+
+  <view class="test-list">
+    <view
+      class="test-item card"
+      wx:for="{{testList}}"
+      wx:key="type"
+      bind:tap="goQuiz"
+      data-type="{{item.type}}"
+      data-available="{{item.available}}"
+    >
+      <view class="test-icon" style="background: {{item.bgColor}};">
+        <text>{{item.icon}}</text>
+      </view>
+      <view class="test-info">
+        <view class="test-name-row">
+          <text class="test-name">{{item.name}}</text>
+          <text class="tag {{item.available ? 'tag-green' : 'tag-gray'}}">
+            {{item.available ? '可测' : '即将上线'}}
+          </text>
+        </view>
+        <text class="test-desc">{{item.desc}}</text>
+      </view>
+      <text class="test-arrow" wx:if="{{item.available}}">→</text>
+    </view>
+  </view>
+
+  <nav-drawer
+    visible="{{drawerVisible}}"
+    currentPath="/pages/tests/tests"
+    bind:close="closeDrawer"
+    bind:navigate="onNavigate"
+  ></nav-drawer>
+</view>

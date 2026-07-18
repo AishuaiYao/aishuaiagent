@@ -1,0 +1,26 @@
+<!-- 导航抽屉组件 -->
+<view class="drawer-mask {{visible ? 'show' : ''}}" bind:tap="close" catch:touchmove="preventMove"></view>
+<view class="drawer {{visible ? 'show' : ''}}">
+  <view class="drawer-header">
+    <image class="drawer-logo" src="/assets/images/logo.png" mode="aspectFit" wx:if="{{false}}"></image>
+    <text class="drawer-title">宝宝成长度量</text>
+    <text class="drawer-subtitle">用心记录每一步成长</text>
+  </view>
+  <view class="drawer-menu">
+    <view
+      class="drawer-item {{currentPath === item.path ? 'active' : ''}}"
+      wx:for="{{menuItems}}"
+      wx:key="path"
+      bind:tap="navigate"
+      data-path="{{item.path}}"
+      data-index="{{index}}"
+    >
+      <text class="drawer-item-icon">{{item.icon}}</text>
+      <text class="drawer-item-text">{{item.name}}</text>
+      <text class="drawer-item-arrow" wx:if="{{currentPath === item.path}}">●</text>
+    </view>
+  </view>
+  <view class="drawer-footer">
+    <text class="drawer-version">v1.0.0</text>
+  </view>
+</view>

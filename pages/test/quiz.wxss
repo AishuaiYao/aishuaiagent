@@ -1,0 +1,186 @@
+/* 测试答题页 - 软拟态设计 */
+
+.page-container {
+  padding: 24px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 进度条 */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12rpx;
+  background: #E8ECF0;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-right: 16rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #A8D8EA, #FFD3B4);
+  border-radius: 6rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #8A9BAA;
+  min-width: 80rpx;
+  text-align: right;
+}
+
+/* 题目卡片 */
+.question-card {
+  padding: 40rpx 32rpx;
+  margin-bottom: 32rpx;
+  text-align: center;
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.question-number {
+  font-size: 24rpx;
+  color: #A8D8EA;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.question-text {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1A2A3A;
+  line-height: 1.6;
+}
+
+/* 选项列表 */
+.options-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 24rpx;
+  background: var(--white);
+  border-radius: var(--radius);
+  border: none;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.option-item:active {
+  transform: scale(0.95);
+}
+
+.option-item.selected {
+  background: linear-gradient(135deg, #F0F8FB, #FFFFFF);
+  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
+}
+
+.option-radio {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 3rpx solid #C0C8D0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.option-radio.checked {
+  border-color: #A8D8EA;
+  background: #F0F8FB;
+}
+
+.option-radio-dot {
+  width: 20rpx;
+  height: 20rpx;
+  background: #A8D8EA;
+  border-radius: 50%;
+}
+
+.option-label {
+  font-size: 30rpx;
+  color: #1A2A3A;
+  line-height: 1.4;
+}
+
+/* 底部按钮 */
+.footer-btn {
+  display: flex;
+  gap: 20rpx;
+  padding: 24rpx 0;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+}
+
+.btn-prev {
+  width: 180rpx;
+  height: 96rpx;
+  background: var(--white);
+  color: #4A5B6E;
+  font-size: 28rpx;
+  font-weight: 500;
+  border-radius: 50rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.btn-prev::after {
+  border: none;
+}
+
+.btn-prev:active {
+  transform: scale(0.95);
+  background: #F5F9FC;
+}
+
+.btn-submit {
+  flex: 1;
+  height: 96rpx;
+  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
+  color: var(--white);
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 50rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
+}
+
+.btn-submit::after {
+  border: none;
+}
+
+.btn-submit:active {
+  transform: scale(0.95);
+  opacity: 0.9;
+}
+
+.btn-submit.disabled {
+  background: #E0E4E8;
+  color: #C0C8D0;
+  box-shadow: none;
+}

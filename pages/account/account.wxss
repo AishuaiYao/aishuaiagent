@@ -1,0 +1,170 @@
+/* 我的账号 - 软拟态设计 */
+
+.page-container {
+  padding: 0 24px;
+  padding-bottom: 32px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  padding: 0 4px;
+  padding-top: env(safe-area-inset-top);
+}
+
+.nav-bar-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1A2A3A;
+}
+
+.hamburger {
+  width: 44rpx;
+  height: 36rpx;
+  padding: 8rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-line {
+  height: 4rpx;
+  background: #1A2A3A;
+  border-radius: 2rpx;
+}
+
+.account-card {
+  margin-top: 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #F0F8FB, #FFFFFF);
+  box-shadow: var(--shadow);
+}
+
+.account-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4px 16px rgba(168, 216, 234, 0.2);
+}
+
+.account-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.account-avatar.default {
+  background: linear-gradient(135deg, #D6EEF5, #A8D8EA);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+}
+
+.account-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1A2A3A;
+  margin-bottom: 8rpx;
+}
+
+.account-phone {
+  font-size: 26rpx;
+  color: #4A5B6E;
+}
+
+.account-phone.hint {
+  color: #8A9BAA;
+  font-size: 24rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  border: none;
+  font-weight: 600;
+  font-size: 28rpx;
+  padding: 20rpx 48rpx;
+  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.section {
+  margin-top: 24rpx;
+}
+
+.menu-list {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx;
+  border-bottom: 1rpx solid #F0F2F5;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-text {
+  font-size: 28rpx;
+  color: #1A2A3A;
+}
+
+.menu-value {
+  font-size: 26rpx;
+  color: #8A9BAA;
+}
+
+.logout-wrap {
+  margin-top: 48rpx;
+  padding: 0 24px;
+}
+
+.btn-logout {
+  width: 100%;
+  height: 88rpx;
+  background: var(--white);
+  color: #E07B6E;
+  font-size: 30rpx;
+  font-weight: 500;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-logout::after {
+  border: none;
+}
+
+.btn-logout:active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-hover);
+}

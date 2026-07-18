@@ -1,0 +1,43 @@
+<!-- 测试答题页 -->
+<view class="page-container">
+  <!-- 进度条 -->
+  <view class="progress-wrap">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%"></view>
+    </view>
+    <text class="progress-text">{{currentIndex + 1}} / {{totalQuestions}}</text>
+  </view>
+
+  <!-- 题目区域 -->
+  <view class="question-card card">
+    <text class="question-number">第 {{currentIndex + 1}} 题</text>
+    <text class="question-text">{{currentQuestion.text}}</text>
+  </view>
+
+  <!-- 选项 -->
+  <view class="options-list">
+    <view
+      class="option-item {{selectedValue === item.value ? 'selected' : ''}}"
+      wx:for="{{currentQuestion.options}}"
+      wx:key="value"
+      bind:tap="selectOption"
+      data-value="{{item.value}}"
+    >
+      <view class="option-radio {{selectedValue === item.value ? 'checked' : ''}}">
+        <view class="option-radio-dot" wx:if="{{selectedValue === item.value}}"></view>
+      </view>
+      <text class="option-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer-btn">
+    <button class="btn-prev" bind:tap="prevQuestion" wx:if="{{currentIndex > 0}}">上一题</button>
+    <button
+      class="btn-submit {{selectedValue ? '' : 'disabled'}}"
+      bind:tap="{{isLastQuestion ? 'submitAnswers' : 'nextQuestion'}}"
+    >
+      {{isLastQuestion ? '提交答案' : '下一题'}}
+    </button>
+  </view>
+</view>

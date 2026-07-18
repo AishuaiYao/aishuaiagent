@@ -1,0 +1,123 @@
+/* 全部测试页 - 软拟态设计 */
+
+.page-container {
+  padding: 0 24px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  padding: 0 4px;
+  padding-top: env(safe-area-inset-top);
+}
+
+.nav-bar-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1A2A3A;
+}
+
+.hamburger {
+  width: 44rpx;
+  height: 36rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8rpx;
+}
+
+.hamburger-line {
+  height: 4rpx;
+  background: #1A2A3A;
+  border-radius: 2rpx;
+}
+
+.test-list {
+  margin-top: 16rpx;
+}
+
+.test-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 24rpx;
+  margin-bottom: 16rpx;
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.test-item:active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-hover);
+}
+
+.test-icon {
+  width: 88rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24rpx;
+  font-size: 44rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.test-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.test-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6rpx;
+}
+
+.test-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A2A3A;
+  margin-right: 12rpx;
+}
+
+.test-desc {
+  font-size: 24rpx;
+  color: #4A5B6E;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.test-arrow {
+  font-size: 28rpx;
+  color: #C0C8D0;
+  margin-left: 12rpx;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4rpx 14rpx;
+  border-radius: var(--radius-sm);
+  font-size: 20rpx;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.tag-green {
+  background: #D4EDDA;
+  color: #3A7D5A;
+}
+
+.tag-gray {
+  background: #F0F2F5;
+  color: #8A9BAA;
+}

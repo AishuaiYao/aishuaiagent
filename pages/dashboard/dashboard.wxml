@@ -1,0 +1,84 @@
+<!-- 跟踪看板页 -->
+<view class="page-container">
+  <view class="nav-bar">
+    <view class="nav-bar-left" bind:tap="openDrawer">
+      <view class="hamburger">
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+        <view class="hamburger-line"></view>
+      </view>
+    </view>
+    <view class="nav-bar-title">跟踪看板</view>
+    <view class="nav-bar-right"></view>
+  </view>
+
+  <block wx:if="{{currentBaby}}">
+    <!-- 宝宝信息 -->
+    <view class="baby-bar">
+      <text class="baby-avatar">{{currentBaby.gender === 'male' ? '👦' : currentBaby.gender === 'female' ? '👧' : '👶'}}</text>
+      <view class="baby-info">
+        <text class="baby-name">{{currentBaby.name}}</text>
+        <text class="baby-age">{{babyAge}}个月</text>
+      </view>
+    </view>
+
+    <!-- 雷达图 -->
+    <view class="section" wx:if="{{radarData}}">
+      <text class="section-title">综合能力雷达图</text>
+      <view class="radar-wrap">
+        <canvas type="2d" id="dashRadarCanvas" class="radar-canvas"></canvas>
+      </view>
+    </view>
+
+    <!-- 维度筛选 -->
+    <view class="filter-tags" wx:if="{{radarData}}">
+      <text class="filter-item {{activeFilter === 'focus' ? 'active' : ''}}" bind:tap="setFilter" data-key="focus">专注力</text>
+      <text class="filter-item {{activeFilter === 'emotion' ? 'active' : ''}}" bind:tap="setFilter" data-key="emotion">情绪</text>
+      <text class="filter-item {{activeFilter === 'social' ? 'active' : ''}}" bind:tap="setFilter" data-key="social">社交</text>
+      <text class="filter-item {{activeFilter === 'sensory' ? 'active' : ''}}" bind:tap="setFilter" data-key="sensory">感知</text>
+    </view>
+
+    <!-- 时间线 -->
+    <view class="section">
+      <text class="section-title">测试记录</text>
+      <view class="timeline" wx:if="{{records.length > 0}}">
+        <view class="timeline-line"></view>
+        <view class="timeline-item" wx:for="{{records}}" wx:key="_id">
+          <view class="timeline-dot" style="background: {{item.dotColor}};"></view>
+          <view class="timeline-card card">
+            <view class="timeline-card-header">
+              <text class="tc-test-name">{{item.testName || (item.testType === 'attention' ? '注意力测试' : item.testType === 'attachment' ? '亲子依恋测试' : '气质类型测试')}}</text>
+              <text class="tc-date">{{item.completedAtStr}}</text>
+            </view>
+            <text class="tc-summary">{{item.summary || '查看详情'}}</text>
+            <view class="tc-tag-row">
+              <text class="tag tag-primary" wx:if="{{item.testType === 'attention'}}">注意力</text>
+              <text class="tag tag-green" wx:if="{{item.testType === 'attachment'}}">依恋</text>
+              <text class="tag" style="background: #E8EBF7; color: #6B7BA0;" wx:if="{{item.testType === 'temperament'}}">气质</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>
+        <text class="empty-icon">📊</text>
+        <text class="empty-text">还没有测试记录</text>
+        <text class="empty-desc">去测一测吧~</text>
+        <button class="btn-primary btn-small" bind:tap="goTests" style="margin-top: 20rpx;">去测试</button>
+      </view>
+    </view>
+  </block>
+
+  <!-- 无宝宝提示 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">👶</text>
+    <text class="empty-text">请先添加宝宝信息</text>
+    <button class="btn-primary btn-small" bind:tap="goBabies" style="margin-top: 20rpx;">去添加</button>
+  </view>
+
+  <nav-drawer
+    visible="{{drawerVisible}}"
+    currentPath="/pages/dashboard/dashboard"
+    bind:close="closeDrawer"
+    bind:navigate="onNavigate"
+  ></nav-drawer>
+</view>

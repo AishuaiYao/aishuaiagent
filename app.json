@@ -1,14 +1,21 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/profile/profile"
+    "pages/tests/tests",
+    "pages/test/quiz",
+    "pages/test/result",
+    "pages/dashboard/dashboard",
+    "pages/babies/babies",
+    "pages/account/account"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#0a0a1a",
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "AI智能助手",
-    "backgroundColor": "#0a0a1a"
+    "navigationBarBackgroundColor": "#FFE5D9",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "宝宝成长度量",
+    "backgroundColor": "#FFF8F5",
+    "backgroundTextStyle": "light"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {}
 }
