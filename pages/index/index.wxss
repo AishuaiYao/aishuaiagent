@@ -17,7 +17,19 @@
   background: transparent;
 }
 
+.nav-bar-left,
+.nav-bar-right {
+  width: 80rpx;
+}
+
+.nav-bar-left {
+  display: flex;
+  align-items: center;
+}
+
 .nav-bar-title {
+  flex: 1;
+  text-align: center;
   font-size: 34rpx;
   font-weight: 600;
   color: #1A2A3A;

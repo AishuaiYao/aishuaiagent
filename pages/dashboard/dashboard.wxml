@@ -38,23 +38,34 @@
       <text class="filter-item {{activeFilter === 'sensory' ? 'active' : ''}}" bind:tap="setFilter" data-key="sensory">感知</text>
     </view>
 
-    <!-- 时间线 -->
+    <!-- 分组测试记录 -->
     <view class="section">
       <text class="section-title">测试记录</text>
-      <view class="timeline" wx:if="{{records.length > 0}}">
-        <view class="timeline-line"></view>
-        <view class="timeline-item" wx:for="{{records}}" wx:key="_id">
-          <view class="timeline-dot" style="background: {{item.dotColor}};"></view>
-          <view class="timeline-card card">
-            <view class="timeline-card-header">
-              <text class="tc-test-name">{{item.testName || (item.testType === 'attention' ? '注意力测试' : item.testType === 'attachment' ? '亲子依恋测试' : '气质类型测试')}}</text>
-              <text class="tc-date">{{item.completedAtStr}}</text>
+      <view class="record-groups" wx:if="{{groupedRecords.length > 0}}">
+        <view class="group-folder" wx:for="{{groupedRecords}}" wx:key="testType">
+          <!-- 文件夹头 -->
+          <view class="folder-header" bind:tap="toggleGroup" data-type="{{item.testType}}">
+            <view class="folder-header-left">
+              <text class="folder-icon">{{item.icon}}</text>
+              <text class="folder-name">{{item.name}}</text>
+              <text class="folder-count">{{item.records.length}}次</text>
             </view>
-            <text class="tc-summary">{{item.summary || '查看详情'}}</text>
-            <view class="tc-tag-row">
-              <text class="tag tag-primary" wx:if="{{item.testType === 'attention'}}">注意力</text>
-              <text class="tag tag-green" wx:if="{{item.testType === 'attachment'}}">依恋</text>
-              <text class="tag" style="background: #E8EBF7; color: #6B7BA0;" wx:if="{{item.testType === 'temperament'}}">气质</text>
+            <text class="folder-arrow {{groupExpand[item.testType] ? 'expanded' : ''}}">▶</text>
+          </view>
+          <!-- 文件夹内容 -->
+          <view class="folder-body" wx:if="{{groupExpand[item.testType]}}">
+            <view class="timeline">
+              <view class="timeline-line"></view>
+              <view class="timeline-item" wx:for="{{item.records}}" wx:key="_id" wx:for-item="record">
+                <view class="timeline-dot" style="background: {{record.dotColor}};"></view>
+                <view class="timeline-card card" bind:tap="goResult" data-id="{{record._id}}" data-type="{{record.testType}}">
+                  <view class="timeline-card-header">
+                    <text class="tc-date">{{record.completedAtStr}}</text>
+                    <text class="tc-baby-age" wx:if="{{record.babyAge != null}}">{{record.babyAge}}个月</text>
+                  </view>
+                  <text class="tc-summary">{{record.summary || '查看详情'}}</text>
+                </view>
+              </view>
             </view>
           </view>
         </view>

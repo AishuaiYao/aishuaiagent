@@ -35,15 +35,51 @@ Page({
       const formatted = records.map(r => ({
         ...r,
         completedAtStr: util.formatDate(r.completedAt),
+        babyAge: r.babyAgeMonths != null ? r.babyAgeMonths : null,
         dotColor: r.testType === 'attention' ? '#A8D8EA' : r.testType === 'attachment' ? '#FFD3B4' : '#C7CEEA'
       }));
       this.setData({ records: formatted });
+
+      // 按测试类型分组
+      this.groupRecords(formatted);
 
       // 聚合最新各测试维度数据
       this.aggregateRadarData(formatted);
     } catch (e) {
       console.error('加载记录失败:', e);
     }
+  },
+
+  /** 按测试类型分组 */
+  groupRecords(records) {
+    const groups = {};
+    for (const r of records) {
+      const type = r.testType;
+      if (!groups[type]) {
+        const info = util.testTypeMap[type] || { name: '未知测试', icon: '📋', color: '#A8D8EA' };
+        groups[type] = {
+          testType: type,
+          name: info.name,
+          icon: info.icon,
+          color: info.color,
+          records: []
+        };
+      }
+      groups[type].records.push(r);
+    }
+    // 初始化展开状态（默认全部展开）
+    const groupedRecords = Object.values(groups);
+    const groupExpand = {};
+    groupedRecords.forEach(g => { groupExpand[g.testType] = true; });
+
+    this.setData({ groupedRecords, groupExpand });
+  },
+
+  /** 切换分组展开/收起 */
+  toggleGroup(e) {
+    const { type } = e.currentTarget.dataset;
+    const key = `groupExpand.${type}`;
+    this.setData({ [key]: !this.data.groupExpand[type] });
   },
 
   aggregateRadarData(records) {
@@ -194,5 +230,11 @@ Page({
 
   goBabies() {
     wx.navigateTo({ url: '/pages/babies/babies' });
+  },
+
+  /** 查看测试详情 */
+  goResult(e) {
+    const { id, type } = e.currentTarget.dataset;
+    wx.navigateTo({ url: `/pages/test/result?id=${id}&type=${type}` });
   }
 });

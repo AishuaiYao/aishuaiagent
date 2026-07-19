@@ -19,23 +19,56 @@ Page({
     recordId: ''
   },
 
-  onLoad(options) {
-    const { type, record } = options;
-    let recordData;
-    try {
-      recordData = JSON.parse(decodeURIComponent(record));
-    } catch (e) {
-      util.showToast('数据解析失败');
-      setTimeout(() => wx.navigateBack(), 1500);
+  async onLoad(options) {
+    const { type, record, id } = options;
+
+    // 模式1: 从答题页传入，携带完整 record JSON
+    if (record) {
+      let recordData;
+      try {
+        recordData = JSON.parse(decodeURIComponent(record));
+      } catch (e) {
+        util.showToast('数据解析失败');
+        setTimeout(() => wx.navigateBack(), 1500);
+        return;
+      }
+      this.setData({ testType: type, recordId: recordData._id });
+      this.processResult(type, recordData);
+      const testName = util.testTypeMap[type]?.name || recordData.testName || '测试结果';
+      wx.setNavigationBarTitle({ title: testName });
       return;
     }
 
-    this.setData({ testType: type, recordId: recordData._id });
-    this.processResult(type, recordData);
+    // 模式2: 从首页/看板传入，仅有 id，需从数据库查询
+    if (id) {
+      util.showLoading('加载中...');
+      try {
+        const db = wx.cloud.database();
+        const res = await db.collection('test_records').doc(id).get();
+        const recordData = res.data;
+        if (!recordData) {
+          util.hideLoading();
+          util.showToast('记录不存在');
+          setTimeout(() => wx.navigateBack(), 1500);
+          return;
+        }
+        this.setData({ testType: type || recordData.testType, recordId: id });
+        this.processResult(type || recordData.testType, recordData);
+        const testName = util.testTypeMap[type || recordData.testType]?.name || recordData.testName || '测试结果';
+        wx.setNavigationBarTitle({ title: testName });
+        util.hideLoading();
+      } catch (e) {
+        util.hideLoading();
+        console.error('加载记录失败:', e);
+        util.showToast('加载失败，请重试');
+        setTimeout(() => wx.navigateBack(), 1500);
+      }
+      return;
+    }
 
-    // 动态设置导航栏标题
-    const testName = util.testTypeMap[type]?.name || recordData.testName || '测试结果';
-    wx.setNavigationBarTitle({ title: testName });
+    // 无有效参数
+    util.showToast('参数错误');
+    setTimeout(() => wx.navigateBack(), 1500);
   },
 
   processResult(type, record) {

@@ -181,6 +181,12 @@
   color: #8A9BAA;
 }
 
+.tc-baby-age {
+  font-size: 22rpx;
+  color: #A8D8EA;
+  font-weight: 500;
+}
+
 .tc-summary {
   font-size: 24rpx;
   color: #4A5B6E;
@@ -192,6 +198,84 @@
 .tc-tag-row {
   display: flex;
   gap: 8rpx;
+}
+
+/* 分组文件夹 */
+.record-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.group-folder {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  transition: background 0.2s ease;
+}
+
+.folder-header:active {
+  background: #F5F7FA;
+}
+
+.folder-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.folder-icon {
+  font-size: 36rpx;
+}
+
+.folder-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1A2A3A;
+}
+
+.folder-count {
+  font-size: 22rpx;
+  color: #8A9BAA;
+  background: #F0F2F5;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+.folder-arrow {
+  font-size: 22rpx;
+  color: #8A9BAA;
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+}
+
+.folder-arrow.expanded {
+  transform: rotate(90deg);
+}
+
+.folder-body {
+  padding: 0 24rpx 16rpx 8rpx;
+}
+
+.folder-body .timeline {
+  padding-left: 0;
+  margin-left: 6rpx;
+}
+
+.folder-body .timeline-line {
+  left: -9rpx;
+}
+
+.folder-body .timeline-dot {
+  left: -17rpx;
 }
 
 .tag {

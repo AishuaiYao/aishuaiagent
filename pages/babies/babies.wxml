@@ -9,7 +9,7 @@
       </view>
     </view>
     <view class="nav-bar-title">我的宝宝</view>
-    <view class="nav-bar-right" bind:tap="showAddForm">+ 添加</view>
+    <view class="nav-bar-right"></view>
   </view>
 
   <!-- 宝宝列表 -->
@@ -80,6 +80,11 @@
       <button class="btn-secondary" bind:tap="hideForm">取消</button>
       <button class="btn-primary" bind:tap="saveBaby" disabled="{{!formData.name || !formData.birthday}}">保存</button>
     </view>
+  </view>
+
+  <!-- 右下角悬浮添加按钮 -->
+  <view class="fab" bind:tap="showAddForm">
+    <text class="fab-icon">+</text>
   </view>
 
   <nav-drawer
