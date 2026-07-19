@@ -66,4 +66,6 @@
 
   <!-- 分享卡片离屏 Canvas（隐藏） -->
   <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
+  <!-- 颜色提取 Canvas（隐藏） -->
+  <canvas type="2d" id="colorCanvas" class="color-canvas"></canvas>
 </view>

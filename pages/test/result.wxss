@@ -251,5 +251,14 @@
   top: -9999rpx;
   left: -9999rpx;
   width: 600rpx;
-  height: 840rpx;
+  height: 860rpx;
+}
+
+/* 颜色提取画布隐藏 */
+.color-canvas {
+  position: fixed;
+  top: -9999rpx;
+  left: -9999rpx;
+  width: 10rpx;
+  height: 10rpx;
 }
