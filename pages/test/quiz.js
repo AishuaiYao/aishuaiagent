@@ -25,6 +25,10 @@ Page({
       setTimeout(() => wx.navigateBack(), 1500);
       return;
     }
+    // 动态设置导航栏标题为对应测试名
+    const testName = util.testTypeMap[type]?.name || info.name || '测试答题';
+    wx.setNavigationBarTitle({ title: testName });
+
     const questions = info.questions;
     this.setData({
       testType: type,

@@ -32,6 +32,10 @@ Page({
 
     this.setData({ testType: type, recordId: recordData._id });
     this.processResult(type, recordData);
+
+    // 动态设置导航栏标题
+    const testName = util.testTypeMap[type]?.name || recordData.testName || '测试结果';
+    wx.setNavigationBarTitle({ title: testName });
   },
 
   processResult(type, record) {
