@@ -31,7 +31,7 @@
       </view>
       <view class="baby-card-actions">
         <text class="bc-action" bind:tap="switchBaby" data-id="{{item._id}}" wx:if="{{!item.isCurrent}}">设为当前</text>
-        <text class="bc-action" bind:tap="editBaby" data-id="{{item._id}}" data-item="{{item}}">编辑</text>
+        <text class="bc-action" bind:tap="editBaby" data-id="{{item._id}}">编辑</text>
         <text class="bc-action danger" bind:tap="deleteBaby" data-id="{{item._id}}" data-name="{{item.name}}">删除</text>
       </view>
     </view>
@@ -104,6 +104,5 @@
     bind:navigate="onNavigate"
   ></nav-drawer>
 
-  <!-- 隐藏 canvas 用于头像缩放 -->
-  <canvas canvas-id="avatarCanvas" style="position:fixed;left:-9999px;top:-9999px;width:200px;height:200px;"></canvas>
+
 </view>

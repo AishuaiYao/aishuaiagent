@@ -60,7 +60,9 @@ Page({
   },
 
   editBaby(e) {
-    const baby = e.currentTarget.dataset.item;
+    const babyId = e.currentTarget.dataset.id;
+    const baby = this.data.babies.find(b => b._id === babyId);
+    if (!baby) return;
     this.setData({
       showForm: true,
       editingBaby: baby,
@@ -143,44 +145,35 @@ Page({
     this.loadBabies();
   },
 
-  /** 用 canvas 等比缩放到 200px 内再转 base64，大小控制在 ~15KB */
+  /** 多重压缩：先压尺寸再压质量，确保 base64 < 50KB */
   compressToBase64(tempPath) {
-    const that = this;
+    const fs = wx.getFileSystemManager();
+    const ext = (tempPath.split('.').pop() || 'png').toLowerCase();
+    const mime = ext === 'jpg' || ext === 'jpeg' ? 'jpeg' : 'png';
     return new Promise((resolve) => {
-      wx.getImageInfo({
-        src: tempPath,
-        success(info) {
-          const MAX = 200;
-          let w = info.width, h = info.height;
-          if (w > h) {
-            if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-          } else {
-            if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
-          }
-          const ctx = wx.createCanvasContext('avatarCanvas', that);
-          ctx.drawImage(tempPath, 0, 0, w, h);
-          ctx.draw(false, () => {
-            wx.canvasToTempFilePath({
-              canvasId: 'avatarCanvas',
-              width: w, height: h,
-              quality: 0.5,
-              success(res) {
-                try {
-                  const fs = wx.getFileSystemManager();
-                  const b64 = fs.readFileSync(res.tempFilePath, 'base64');
-                  const ext = (tempPath.split('.').pop() || 'png').toLowerCase();
-                  const mime = ext === 'jpg' || ext === 'jpeg' ? 'jpeg' : 'png';
-                  resolve(`data:image/${mime};base64,${b64}`);
-                } catch (e) {
-                  console.error('读取 base64 失败:', e);
-                  resolve(null);
-                }
-              },
-              fail(e) {
-                console.error('canvas 导出失败:', e);
-                that._compressFallback(tempPath, resolve);
+      // 第一轮压缩：quality 40，微信自动缩小尺寸
+      wx.compressImage({
+        src: tempPath, quality: 40,
+        success(r1) {
+          // 第二轮压缩：quality 25，进一步缩小
+          wx.compressImage({
+            src: r1.tempFilePath, quality: 25,
+            success(r2) {
+              try {
+                const b64 = fs.readFileSync(r2.tempFilePath, 'base64');
+                resolve(`data:image/${mime};base64,${b64}`);
+              } catch (e) {
+                console.error('读取 base64 失败:', e);
+                resolve(null);
               }
-            }, that);
+            },
+            fail() {
+              // 二压失败，用一压结果
+              try {
+                const b64 = fs.readFileSync(r1.tempFilePath, 'base64');
+                resolve(`data:image/${mime};base64,${b64}`);
+              } catch (e) { resolve(null); }
+            }
           });
         },
         fail() {
@@ -188,30 +181,6 @@ Page({
           resolve(null);
         }
       });
-    });
-  },
-
-  /** 降级方案：直接 compressImage 压缩后读 base64 */
-  _compressFallback(tempPath, resolve) {
-    const fs = wx.getFileSystemManager();
-    wx.compressImage({
-      src: tempPath,
-      quality: 30,
-      success(res) {
-        try {
-          const b64 = fs.readFileSync(res.tempFilePath, 'base64');
-          const ext = (tempPath.split('.').pop() || 'png').toLowerCase();
-          const mime = ext === 'jpg' || ext === 'jpeg' ? 'jpeg' : 'png';
-          resolve(`data:image/${mime};base64,${b64}`);
-        } catch (e) {
-          console.error('降级压缩失败:', e);
-          resolve(null);
-        }
-      },
-      fail() {
-        util.showToast('图片处理失败');
-        resolve(null);
-      }
     });
   },
 
