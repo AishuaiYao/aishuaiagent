@@ -333,7 +333,11 @@ Page({
         ctx.arc(W / 2, avCY, avR, 0, Math.PI * 2);
         ctx.clip();
         if (avatarImg) {
-          ctx.drawImage(avatarImg, W / 2 - avR, avCY - avR, avR * 2, avR * 2);
+          // 从图片中心裁剪正方形避免拉伸变形
+          const iw = avatarImg.width, ih = avatarImg.height;
+          const sq = Math.min(iw, ih);
+          const sx = (iw - sq) / 2, sy = (ih - sq) / 2;
+          ctx.drawImage(avatarImg, sx, sy, sq, sq, W / 2 - avR, avCY - avR, avR * 2, avR * 2);
         } else {
           ctx.fillStyle = 'rgba(255,255,255,0.5)';
           ctx.fillRect(W / 2 - avR, avCY - avR, avR * 2, avR * 2);
@@ -357,11 +361,6 @@ Page({
         ctx.textAlign = 'center';
         ctx.textBaseline = 'alphabetic';
         ctx.fillText(baby?.name || '宝宝', W / 2, 84);
-
-        // 知芽 · 成长记录
-        ctx.fillStyle = 'rgba(255,255,255,0.7)';
-        ctx.font = '9px -apple-system, sans-serif';
-        ctx.fillText('知芽 · 成长记录', W / 2, 100);
 
         // ========== 测试信息卡片 (半透明白) ==========
         ctx.save();
@@ -472,11 +471,11 @@ Page({
         }
 
         // ========== 底部品牌 ==========
-        ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        ctx.font = 'bold 10px -apple-system, sans-serif';
+        ctx.fillStyle = mc.textDark;
+        ctx.font = 'bold 11px -apple-system, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('知芽', W / 2, H - 24);
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fillStyle = mc.textMid;
         ctx.font = '8px -apple-system, sans-serif';
         ctx.fillText('科学陪伴每一步', W / 2, H - 12);
 
