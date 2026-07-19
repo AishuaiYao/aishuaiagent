@@ -75,12 +75,12 @@
 }
 
 .drawer-item.active {
-  background: linear-gradient(90deg, rgba(168, 216, 234, 0.18), transparent);
+  background: linear-gradient(90deg, var(--primary-rgba018), transparent);
 }
 
 .drawer-item:active {
   transform: scale(0.95);
-  background: rgba(168, 216, 234, 0.1);
+  background: var(--primary-rgba01);
 }
 
 .drawer-item-icon {
@@ -97,13 +97,13 @@
 }
 
 .drawer-item.active .drawer-item-text {
-  color: #A8D8EA;
+  color: var(--primary);
   font-weight: 600;
 }
 
 .drawer-item-arrow {
   margin-left: auto;
-  color: #A8D8EA;
+  color: var(--primary);
   font-size: 16rpx;
 }
 

@@ -60,7 +60,7 @@
 
 .baby-card.current {
   background: linear-gradient(135deg, #F0F8FB, #FFFFFF);
-  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.12);
+  box-shadow: 0 4px 20px var(--primary-rgba01);
 }
 
 .baby-card-main {
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #F0F8FB, #D6EEF5);
+  background: linear-gradient(135deg, #F0F8FB, var(--primary-light));
   border-radius: 50%;
   margin-right: 20rpx;
 }
@@ -99,7 +99,7 @@
 
 .bc-tag {
   font-size: 20rpx;
-  background: #A8D8EA;
+  background: var(--primary);
   color: #FFFFFF;
   padding: 2rpx 14rpx;
   border-radius: var(--radius-sm);
@@ -128,7 +128,7 @@
 
 .bc-action {
   font-size: 24rpx;
-  color: #A8D8EA;
+  color: var(--primary);
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -149,8 +149,8 @@
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
-  box-shadow: 0 8px 24px rgba(168, 216, 234, 0.35);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 8px 24px var(--primary-rgba035);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,7 +160,7 @@
 
 .fab:active {
   transform: scale(0.9);
-  box-shadow: 0 4px 12px rgba(168, 216, 234, 0.25);
+  box-shadow: 0 4px 12px var(--primary-rgba025);
 }
 
 .fab-icon {
@@ -321,10 +321,10 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #FFFFFF;
   border-radius: 50rpx;
-  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
+  box-shadow: 0 4px 20px var(--primary-rgba015);
   border: none;
 }
 

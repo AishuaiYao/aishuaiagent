@@ -56,7 +56,7 @@
   align-items: center;
   padding: 24rpx 32rpx;
   margin-top: 16rpx;
-  background: linear-gradient(135deg, #D6EEF5 0%, #A8D8EA 25%, #FFFFFF 90%);
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 25%, #FFFFFF 90%);
   border-radius: var(--radius);
 }
 
@@ -76,7 +76,7 @@
   justify-content: center;
   background: rgba(255, 255, 255, 0.75);
   border-radius: 50%;
-  box-shadow: 0 4px 16px rgba(168, 216, 234, 0.25);
+  box-shadow: 0 4px 16px var(--primary-rgba025);
 }
 
 .baby-info {
@@ -151,7 +151,7 @@
 
 .quick-card.attention {
   background: linear-gradient(180deg, #F0F8FB 0%, #FFFFFF 100%);
-  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.1);
+  box-shadow: 0 4px 20px var(--primary-rgba01);
 }
 
 .quick-card.attachment {
@@ -206,7 +206,7 @@
 
 .section-more {
   font-size: 26rpx;
-  color: #A8D8EA;
+  color: var(--primary);
   font-weight: 500;
 }
 
@@ -259,7 +259,7 @@
 
 .record-summary {
   font-size: 24rpx;
-  color: #A8D8EA;
+  color: var(--primary);
   max-width: 160rpx;
   overflow: hidden;
   text-overflow: ellipsis;

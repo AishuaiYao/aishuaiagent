@@ -1,5 +1,5 @@
 <!-- 首页 -->
-<view class="page-container">
+<view class="page-container" style="--primary: {{theme.primary}}; --primary-light: {{theme.primaryLight}}; --secondary: {{theme.secondary}}; --accent: {{theme.accent}}; --accent-light: {{theme.accentLight}}; --primary-rgba02: {{theme.primaryRgba02}}; --primary-rgba015: {{theme.primaryRgba015}}; --primary-rgba01: {{theme.primaryRgba01}}; --primary-rgba025: {{theme.primaryRgba025}}; --primary-rgba035: {{theme.primaryRgba035}}; --primary-rgba018: {{theme.primaryRgba018}}; --secondary-rgba01: {{theme.secondaryRgba01}}; --secondary-rgba015: {{theme.secondaryRgba015}};">
   <!-- 自定义导航栏 -->
   <view class="nav-bar">
     <view class="nav-bar-left" bind:tap="openDrawer">

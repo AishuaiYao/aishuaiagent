@@ -9,10 +9,14 @@ Page({
     babyAge: 0,
     records: [],
     radarData: null,
-    activeFilter: ''
+    activeFilter: '',
+    theme: {},
+    groupedRecords: [],
+    groupExpand: {}
   },
 
   onShow() {
+    this.setData({ theme: app.getTheme() });
     this.loadBaby();
     this.loadRecords();
   },
@@ -36,7 +40,7 @@ Page({
         ...r,
         completedAtStr: util.formatDate(r.completedAt),
         babyAge: r.babyAgeMonths != null ? r.babyAgeMonths : null,
-        dotColor: r.testType === 'attention' ? '#A8D8EA' : r.testType === 'attachment' ? '#FFD3B4' : '#C7CEEA'
+        dotColor: r.testType === 'attention' ? app.getTheme().dotBlue : r.testType === 'attachment' ? app.getTheme().dotOrange : app.getTheme().dotPurple
       }));
       this.setData({ records: formatted });
 
@@ -56,7 +60,7 @@ Page({
     for (const r of records) {
       const type = r.testType;
       if (!groups[type]) {
-        const info = util.testTypeMap[type] || { name: '未知测试', icon: '📋', color: '#A8D8EA' };
+        const info = util.testTypeMap[type] || { name: '未知测试', icon: '📋', color: app.getTheme().primary };
         groups[type] = {
           testType: type,
           name: info.name,
@@ -110,6 +114,7 @@ Page({
   },
 
   drawRadar() {
+    const theme = app.getTheme();
     const query = wx.createSelectorQuery();
     query.select('#dashRadarCanvas')
       .fields({ node: true, size: true })
@@ -164,7 +169,7 @@ Page({
           const lx = cx + Math.cos(angle) * (radius + 40);
           const ly = cy + Math.sin(angle) * (radius + 40);
           const dimKeys = ['focus', 'emotion', 'social', 'sensory'];
-          ctx.fillStyle = this.data.activeFilter === dimKeys[i] ? '#A8D8EA' : '#4A5B6E';
+          ctx.fillStyle = this.data.activeFilter === dimKeys[i] ? theme.primary : '#4A5B6E';
           ctx.font = '12px -apple-system, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
@@ -181,9 +186,9 @@ Page({
           else ctx.lineTo(x, y);
         }
         ctx.closePath();
-        ctx.fillStyle = 'rgba(168, 216, 234, 0.2)';
+        ctx.fillStyle = theme.primaryRgba02;
         ctx.fill();
-        ctx.strokeStyle = '#A8D8EA';
+        ctx.strokeStyle = theme.primary;
         ctx.lineWidth = 2;
         ctx.stroke();
 
@@ -194,11 +199,11 @@ Page({
           const y = cy + Math.sin(angle) * radius * val;
           ctx.beginPath();
           ctx.arc(x, y, 5, 0, Math.PI * 2);
-          ctx.fillStyle = '#A8D8EA';
+          ctx.fillStyle = theme.primary;
           ctx.fill();
           ctx.beginPath();
           ctx.arc(x, y, 8, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(168, 216, 234, 0.15)';
+          ctx.fillStyle = theme.primaryRgba015;
           ctx.fill();
         }
       });

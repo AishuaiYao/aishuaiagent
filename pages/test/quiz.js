@@ -14,10 +14,12 @@ Page({
     selectedValue: null,
     answers: {},
     progress: 0,
-    isLastQuestion: false
+    isLastQuestion: false,
+    theme: {}
   },
 
   onLoad(options) {
+    this.setData({ theme: app.getTheme() });
     const type = options.type;
     const info = testData[type];
     if (!info) {

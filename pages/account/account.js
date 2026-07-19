@@ -10,10 +10,12 @@ Page({
     showRegister: false,
     avatarUrl: '',
     nickName: '',
-    submitting: false
+    submitting: false,
+    theme: {}
   },
 
   onShow() {
+    this.setData({ theme: app.getTheme() });
     const userInfo = app.globalData.userInfo;
     this.setData({ userInfo });
 
@@ -104,7 +106,7 @@ Page({
     wx.showModal({
       title: '退出登录',
       content: '退出后不会删除您的数据。确定退出吗？',
-      confirmColor: '#A8D8EA',
+      confirmColor: app.getTheme().primary,
       success: (res) => {
         if (res.confirm) {
           app.setUserInfo(null);

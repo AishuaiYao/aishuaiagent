@@ -14,11 +14,12 @@ Page({
       gender: '',
       note: ''
     },
-    today: ''
+    today: '',
+    theme: {}
   },
 
   onShow() {
-    this.setData({ today: util.formatDate(new Date()) });
+    this.setData({ today: util.formatDate(new Date()), theme: app.getTheme() });
     this.loadBabies();
   },
 
@@ -177,7 +178,7 @@ Page({
     wx.showModal({
       title: '确认删除',
       content: `确定要删除"${name}"的信息吗？此操作不可恢复。`,
-      confirmColor: '#A8D8EA',
+      confirmColor: app.getTheme().primary,
       success: async (res) => {
         if (res.confirm) {
           util.showLoading();

@@ -7,10 +7,12 @@ Page({
     drawerVisible: false,
     currentBaby: null,
     babyAge: 0,
-    recentRecords: []
+    recentRecords: [],
+    theme: {}
   },
 
   async onShow() {
+    this.setData({ theme: app.getTheme() });
     await this.loadBaby();
     this.loadRecords();
   },

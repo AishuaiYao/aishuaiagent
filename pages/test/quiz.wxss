@@ -26,7 +26,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #A8D8EA, #FFD3B4);
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
   border-radius: 6rpx;
   transition: width 0.3s ease;
 }
@@ -50,7 +50,7 @@
 
 .question-number {
   font-size: 24rpx;
-  color: #A8D8EA;
+  color: var(--primary);
   margin-bottom: 20rpx;
   display: block;
 }
@@ -87,7 +87,7 @@
 
 .option-item.selected {
   background: linear-gradient(135deg, #F0F8FB, #FFFFFF);
-  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
+  box-shadow: 0 4px 20px var(--primary-rgba015);
 }
 
 .option-radio {
@@ -104,14 +104,14 @@
 }
 
 .option-radio.checked {
-  border-color: #A8D8EA;
+  border-color: var(--primary);
   background: #F0F8FB;
 }
 
 .option-radio-dot {
   width: 20rpx;
   height: 20rpx;
-  background: #A8D8EA;
+  background: var(--primary);
   border-radius: 50%;
 }
 
@@ -157,7 +157,7 @@
 .btn-submit {
   flex: 1;
   height: 96rpx;
-  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: var(--white);
   font-size: 32rpx;
   font-weight: 600;
@@ -167,7 +167,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(168, 216, 234, 0.15);
+  box-shadow: 0 4px 20px var(--primary-rgba015);
 }
 
 .btn-submit::after {

@@ -16,10 +16,12 @@ Page({
     suggestions: [],
     dimensionList: [],
     dimensionsData: null,
-    recordId: ''
+    recordId: '',
+    theme: {}
   },
 
   async onLoad(options) {
+    this.setData({ theme: app.getTheme() });
     const { type, record, id } = options;
 
     // 模式1: 从答题页传入，携带完整 record JSON
@@ -72,6 +74,7 @@ Page({
   },
 
   processResult(type, record) {
+    const theme = app.getTheme();
     const { scores, dimensions, summary, suggestions, completedAt, babyAgeMonths } = record;
 
     // 计算总分
@@ -90,20 +93,20 @@ Page({
     let scoreLevel = '', badgeColor = '';
     if (overallScore >= 85) {
       scoreLevel = '优秀';
-      badgeColor = '#A8D8EA';
+      badgeColor = theme.primary;
     } else if (overallScore >= 70) {
       scoreLevel = '良好';
-      badgeColor = '#C7CEEA';
+      badgeColor = theme.accent;
     } else if (overallScore >= 55) {
       scoreLevel = '一般';
-      badgeColor = '#FFD3B4';
+      badgeColor = theme.secondary;
     } else {
       scoreLevel = '待提升';
       badgeColor = '#8A9BAA';
     }
 
     // 维度列表
-    const dimColors = ['#A8D8EA', '#FFD3B4', '#C7CEEA', '#B5E0D0', '#F0C8D0', '#B0D8F0', '#D8C8E0', '#E8D0C0', '#D0E0D8'];
+    const dimColors = [theme.primary, theme.secondary, theme.accent, '#B5E0D0', '#F0C8D0', '#B0D8F0', '#D8C8E0', '#E8D0C0', '#D0E0D8'];
     let dimensionList = [];
     let dimColorIdx = 0;
 
@@ -184,6 +187,7 @@ Page({
 
   /** 绘制雷达图 */
   drawRadar() {
+    const theme = app.getTheme();
     const query = wx.createSelectorQuery();
     query.select('#radarCanvas')
       .fields({ node: true, size: true })
@@ -257,9 +261,9 @@ Page({
           else ctx.lineTo(x, y);
         }
         ctx.closePath();
-        ctx.fillStyle = 'rgba(168, 216, 234, 0.25)';
+        ctx.fillStyle = theme.primaryRgba025;
         ctx.fill();
-        ctx.strokeStyle = '#A8D8EA';
+        ctx.strokeStyle = theme.primary;
         ctx.lineWidth = 2;
         ctx.stroke();
 
@@ -271,11 +275,11 @@ Page({
           const y = cy + Math.sin(angle) * radius * val;
           ctx.beginPath();
           ctx.arc(x, y, 5, 0, Math.PI * 2);
-          ctx.fillStyle = '#A8D8EA';
+          ctx.fillStyle = theme.primary;
           ctx.fill();
           ctx.beginPath();
           ctx.arc(x, y, 8, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(168, 216, 234, 0.15)';
+          ctx.fillStyle = theme.primaryRgba015;
           ctx.fill();
         }
       });
@@ -283,6 +287,7 @@ Page({
 
   /** 保存/分享卡片 (Canvas 绘制分享图) */
   shareCard() {
+    const theme = app.getTheme();
     wx.showLoading({ title: '生成中...' });
 
     // 创建一个离屏 Canvas 绘制分享卡片
@@ -345,7 +350,7 @@ Page({
 
         // 比较
         if (data.compareText) {
-          ctx.fillStyle = '#A8D8EA';
+          ctx.fillStyle = theme.primary;
           ctx.font = '12px -apple-system, sans-serif';
           ctx.textAlign = 'center';
           ctx.fillText(data.compareText, w / 2, 210);
