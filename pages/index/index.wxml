@@ -16,7 +16,8 @@
   <!-- 当前宝宝信息 -->
   <view class="baby-header card">
     <view class="baby-avatar-wrap" wx:if="{{currentBaby}}">
-      <view class="baby-avatar">{{currentBaby.gender === 'male' ? '👦' : currentBaby.gender === 'female' ? '👧' : '👶'}}</view>
+      <image wx:if="{{currentBaby.avatar}}" class="baby-avatar-img" src="{{currentBaby.avatar}}" mode="aspectFill"></image>
+      <view wx:else class="baby-avatar">{{currentBaby.gender === 'male' ? '👦' : currentBaby.gender === 'female' ? '👧' : '👶'}}</view>
     </view>
     <view class="baby-info" wx:if="{{currentBaby}}">
       <text class="baby-name">{{currentBaby.name}}</text>

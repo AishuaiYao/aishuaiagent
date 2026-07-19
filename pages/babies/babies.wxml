@@ -16,8 +16,9 @@
   <view class="baby-list" wx:if="{{babies.length > 0}}">
     <view class="baby-card card {{item.isCurrent ? 'current' : ''}}" wx:for="{{babies}}" wx:key="_id">
       <view class="baby-card-main">
-        <view class="bc-avatar">
-          <text>{{item.gender === 'male' ? '👦' : item.gender === 'female' ? '👧' : '👶'}}</text>
+        <view class="bc-avatar" bind:tap="changeAvatar" data-id="{{item._id}}">
+          <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="bc-avatar-img"></image>
+          <text wx:else>{{item.gender === 'male' ? '👦' : item.gender === 'female' ? '👧' : '👶'}}</text>
         </view>
         <view class="bc-info">
           <view class="bc-name-row">
@@ -52,6 +53,15 @@
       <text class="modal-close" bind:tap="hideForm">✕</text>
     </view>
     <view class="modal-body">
+      <view class="form-item form-avatar-item">
+        <text class="form-label">宝宝头像</text>
+        <view class="form-avatar" bind:tap="onFormChooseAvatar">
+          <image wx:if="{{formAvatarTemp}}" src="{{formAvatarTemp}}" mode="aspectFill" class="form-avatar-img"></image>
+          <image wx:elif="{{editingBaby.avatar}}" src="{{editingBaby.avatar}}" mode="aspectFill" class="form-avatar-img"></image>
+          <text wx:else class="form-avatar-placeholder">📷</text>
+        </view>
+        <text class="form-avatar-hint">点击更换头像</text>
+      </view>
       <view class="form-item">
         <text class="form-label">宝宝昵称</text>
         <input class="form-input" placeholder="请输入宝宝小名" value="{{formData.name}}" bindinput="onFormInput" data-key="name" maxlength="10"/>
@@ -93,4 +103,7 @@
     bind:close="closeDrawer"
     bind:navigate="onNavigate"
   ></nav-drawer>
+
+  <!-- 隐藏 canvas 用于头像缩放 -->
+  <canvas canvas-id="avatarCanvas" style="position:fixed;left:-9999px;top:-9999px;width:200px;height:200px;"></canvas>
 </view>

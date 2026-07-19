@@ -5,6 +5,7 @@
 /** 计算月龄 */
 function calcBabyAge(birthday) {
   const birth = new Date(birthday);
+  if (isNaN(birth.getTime())) return 0;
   const now = new Date();
   const yearDiff = now.getFullYear() - birth.getFullYear();
   const monthDiff = now.getMonth() - birth.getMonth();
@@ -14,7 +15,9 @@ function calcBabyAge(birthday) {
 
 /** 格式化日期 YYYY-MM-DD */
 function formatDate(date) {
+  if (date == null) return '';
   const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
@@ -23,7 +26,9 @@ function formatDate(date) {
 
 /** 格式化日期时间 */
 function formatDateTime(date) {
+  if (date == null) return '';
   const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
