@@ -89,6 +89,11 @@ Page({
     }
   },
 
+  /** 点击登录按钮，显示注册弹窗 */
+  showLoginPopup() {
+    this.setData({ showRegister: true });
+  },
+
   /** 关闭注册弹窗 */
   closeRegister() {
     this.setData({ showRegister: false });

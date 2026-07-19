@@ -125,6 +125,31 @@
   padding: 0 24px;
 }
 
+/* 未登录时的卡片内登录按钮 */
+.btn-login-card {
+  margin-top: 24rpx;
+  width: 320rpx;
+  height: 76rpx;
+  background: linear-gradient(135deg, #A8D8EA, #FFD3B4);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 600;
+  border-radius: 50rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(168, 216, 234, 0.2);
+}
+
+.btn-login-card::after {
+  border: none;
+}
+
+.btn-login-card:active {
+  transform: scale(0.95);
+}
+
 .btn-logout {
   width: 100%;
   height: 88rpx;
