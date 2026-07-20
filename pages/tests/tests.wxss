@@ -15,6 +15,10 @@
   padding-top: env(safe-area-inset-top);
 }
 
+.nav-bar-left, .nav-bar-right {
+  width: 80rpx;
+}
+
 .nav-bar-title {
   font-size: 34rpx;
   font-weight: 600;
@@ -92,6 +96,11 @@
   font-weight: 600;
   color: #1A2A3A;
   margin-right: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .test-desc {
@@ -109,12 +118,15 @@
 }
 
 .tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 4rpx 14rpx;
   border-radius: var(--radius-sm);
   font-size: 20rpx;
   font-weight: 500;
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .tag-green {

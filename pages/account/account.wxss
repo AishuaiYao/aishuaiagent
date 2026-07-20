@@ -16,6 +16,10 @@
   padding-top: env(safe-area-inset-top);
 }
 
+.nav-bar-left, .nav-bar-right {
+  width: 80rpx;
+}
+
 .nav-bar-title {
   font-size: 34rpx;
   font-weight: 600;
