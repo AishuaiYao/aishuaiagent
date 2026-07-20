@@ -3,15 +3,23 @@
   <!-- 进度条 -->
   <view class="progress-wrap">
     <view class="progress-bar">
-      <view class="progress-fill" style="width: {{progress}}%"></view>
+      <view class="progress-fill" style="width: {{progress}}%;">
+        <view class="progress-shimmer"></view>
+      </view>
     </view>
     <text class="progress-text">{{currentIndex + 1}} / {{totalQuestions}}</text>
   </view>
 
-  <!-- 题目区域 -->
-  <view class="question-card card">
-    <text class="question-number">第 {{currentIndex + 1}} 题</text>
-    <text class="question-text">{{currentQuestion.text}}</text>
+  <!-- 题目区域（滑动过渡） -->
+  <view class="question-anim-wrap">
+    <view class="question-card card slide-anim" wx:if="{{animKey % 2 === 0}}" style="animation-name: {{animDirection === 'right' ? 'slideInRight' : 'slideInLeft'}};">
+      <text class="question-number">第 {{currentIndex + 1}} 题</text>
+      <text class="question-text">{{currentQuestion.text}}</text>
+    </view>
+    <view class="question-card card slide-anim" wx:else style="animation-name: {{animDirection === 'right' ? 'slideInRight' : 'slideInLeft'}};">
+      <text class="question-number">第 {{currentIndex + 1}} 题</text>
+      <text class="question-text">{{currentQuestion.text}}</text>
+    </view>
   </view>
 
   <!-- 选项 -->
@@ -37,7 +45,8 @@
       class="btn-submit {{selectedValue ? '' : 'disabled'}}"
       bind:tap="{{isLastQuestion ? 'submitAnswers' : 'nextQuestion'}}"
     >
-      {{isLastQuestion ? '提交答案' : '下一题'}}
+      <text wx:if="{{isLastQuestion && !selectedValue}}">请先选择答案</text>
+      <text wx:else>{{isLastQuestion ? '✓ 提交答案' : '下一题'}}</text>
     </button>
   </view>
 </view>

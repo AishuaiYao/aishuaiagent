@@ -1,7 +1,7 @@
 <!-- 测试结果页 -->
 <view class="page-container" style="--primary: {{theme.primary}}; --primary-light: {{theme.primaryLight}}; --secondary: {{theme.secondary}}; --accent: {{theme.accent}}; --accent-light: {{theme.accentLight}}; --primary-rgba02: {{theme.primaryRgba02}}; --primary-rgba015: {{theme.primaryRgba015}}; --primary-rgba01: {{theme.primaryRgba01}}; --primary-rgba025: {{theme.primaryRgba025}}; --primary-rgba035: {{theme.primaryRgba035}}; --primary-rgba018: {{theme.primaryRgba018}}; --secondary-rgba01: {{theme.secondaryRgba01}}; --secondary-rgba015: {{theme.secondaryRgba015}};">
   <!-- 顶部信息 -->
-  <view class="result-header">
+  <view class="result-header anim-enter anim-delay-1">
     <text class="result-test-name">{{testName}}</text>
     <view class="result-meta">
       <text class="result-date">{{completedAt}}</text>
@@ -10,26 +10,29 @@
   </view>
 
   <!-- 总分卡片 -->
-  <view class="score-card card">
-    <text class="score-number">{{overallScore}}</text>
+  <view class="score-card card anim-enter-scale anim-delay-2">
+    <text class="score-number">{{displayScore}}</text>
     <text class="score-unit">分</text>
-    <view class="score-badge" style="background: {{badgeColor}};">
+    <view class="score-badge {{showBadge ? 'badge-pop' : ''}}" style="background: {{badgeColor}};">
       <text>{{scoreLevel}}</text>
     </view>
     <text class="score-compare" wx:if="{{compareText}}">{{compareText}}</text>
   </view>
 
+  <!-- 撒花 Canvas -->
+  <canvas type="2d" id="confettiCanvas" class="confetti-canvas" wx:if="{{showConfetti}}"></canvas>
+
   <!-- 维度得分 -->
   <view class="section" wx:if="{{dimensionList.length > 0}}">
     <text class="section-title">维度分析</text>
     <view class="dimension-list">
-      <view class="dimension-item" wx:for="{{dimensionList}}" wx:key="key">
+      <view class="dimension-item {{dimsRevealed ? 'dim-reveal' : ''}}" wx:for="{{dimensionList}}" wx:key="key" style="animation-delay: {{0.12 * index}}s;">
         <view class="dimension-header">
           <text class="dimension-name">{{item.name}}</text>
           <text class="dimension-score">{{item.score}}分</text>
         </view>
         <view class="dimension-bar-wrap">
-          <view class="dimension-bar" style="width: {{item.score}}%; background: {{item.color}};"></view>
+          <view class="dimension-bar {{dimsRevealed ? 'dim-bar-reveal' : ''}}" style="width: {{dimsRevealed ? item.score : 0}}%; background: {{item.color}}; transition-delay: {{0.12 * index}}s;"></view>
         </view>
       </view>
     </view>
@@ -38,18 +41,18 @@
   <!-- 雷达图区域（Canvas） -->
   <view class="section" wx:if="{{dimensionsData}}">
     <text class="section-title">综合能力雷达图</text>
-    <view class="radar-canvas-wrap">
+    <view class="radar-canvas-wrap anim-enter-scale anim-delay-4">
       <canvas type="2d" id="radarCanvas" class="radar-canvas"></canvas>
     </view>
   </view>
 
   <!-- 解读与建议 -->
-  <view class="section">
+  <view class="section anim-enter anim-delay-5">
     <text class="section-title">解读与建议</text>
     <view class="advice-card card">
       <text class="advice-summary">{{summary}}</text>
       <view class="advice-list">
-        <view class="advice-item" wx:for="{{suggestions}}" wx:key="*this">
+        <view class="advice-item" wx:for="{{suggestions}}" wx:key="*this" style="animation: fadeInUp 0.4s ease {{0.08 * index}}s both;">
           <text class="advice-dot">•</text>
           <text class="advice-text">{{item}}</text>
         </view>
@@ -58,7 +61,7 @@
   </view>
 
   <!-- 底部操作 -->
-  <view class="footer-actions">
+  <view class="footer-actions anim-enter anim-delay-6">
     <button class="action-btn secondary" bind:tap="goDashboard">查看跟踪看板</button>
     <button class="action-btn primary" bind:tap="retakeQuiz">再测一次</button>
     <button class="action-btn full" bind:tap="shareCard">保存/分享卡片</button>

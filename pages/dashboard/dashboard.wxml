@@ -53,10 +53,10 @@
             <text class="folder-arrow {{groupExpand[item.testType] ? 'expanded' : ''}}">▶</text>
           </view>
           <!-- 文件夹内容 -->
-          <view class="folder-body" wx:if="{{groupExpand[item.testType]}}">
+          <view class="folder-body {{groupExpand[item.testType] ? 'show' : ''}}">
             <view class="timeline">
               <view class="timeline-line"></view>
-              <view class="timeline-item" wx:for="{{item.records}}" wx:key="_id" wx:for-item="record">
+              <view class="timeline-item" wx:for="{{item.records}}" wx:key="_id" wx:for-item="record" style="animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) {{0.08 * index}}s both;">
                 <view class="timeline-dot" style="background: {{record.dotColor}};"></view>
                 <view class="timeline-card card" bind:tap="goResult" data-id="{{record._id}}" data-type="{{record.testType}}">
                   <view class="timeline-card-header">

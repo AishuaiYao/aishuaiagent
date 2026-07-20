@@ -49,11 +49,11 @@
   background: var(--white);
   box-shadow: var(--shadow);
   border: none;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .test-item:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
   box-shadow: var(--shadow-hover);
 }
 
@@ -67,6 +67,11 @@
   font-size: 44rpx;
   margin-right: 20rpx;
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.test-item:active .test-icon {
+  transform: scale(1.1);
 }
 
 .test-info {

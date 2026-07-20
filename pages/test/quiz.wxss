@@ -22,13 +22,32 @@
   border-radius: 6rpx;
   overflow: hidden;
   margin-right: 16rpx;
+  position: relative;
 }
 
 .progress-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   border-radius: 6rpx;
-  transition: width 0.3s ease;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 进度条流光 */
+.progress-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.5) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
 }
 
 .progress-text {
@@ -38,10 +57,21 @@
   text-align: right;
 }
 
+/* 题目卡片滑动动画容器 */
+.question-anim-wrap {
+  overflow: hidden;
+  margin-bottom: 32rpx;
+}
+
+.slide-anim {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+
 /* 题目卡片 */
 .question-card {
   padding: 40rpx 32rpx;
-  margin-bottom: 32rpx;
   text-align: center;
   border-radius: var(--radius);
   background: var(--white);
@@ -78,16 +108,17 @@
   border-radius: var(--radius);
   border: none;
   box-shadow: var(--shadow);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .option-item:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
 }
 
 .option-item.selected {
   background: linear-gradient(135deg, #F0F8FB, #FFFFFF);
   box-shadow: 0 4px 20px var(--primary-rgba015);
+  transform: translateX(8rpx);
 }
 
 .option-radio {
@@ -100,12 +131,13 @@
   justify-content: center;
   margin-right: 20rpx;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .option-radio.checked {
   border-color: var(--primary);
   background: #F0F8FB;
+  transform: scale(1.1);
 }
 
 .option-radio-dot {
@@ -113,6 +145,7 @@
   height: 20rpx;
   background: var(--primary);
   border-radius: 50%;
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .option-label {
@@ -143,6 +176,7 @@
   justify-content: center;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
 .btn-prev::after {
@@ -166,8 +200,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 20px var(--primary-rgba015);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-submit::after {
@@ -175,8 +211,24 @@
 }
 
 .btn-submit:active {
-  transform: scale(0.95);
-  opacity: 0.9;
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 提交按钮涟漪 */
+.btn-submit:not(.disabled)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0s;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.btn-submit:not(.disabled):active::after {
+  opacity: 1;
 }
 
 .btn-submit.disabled {

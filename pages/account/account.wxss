@@ -140,6 +140,9 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 16px var(--primary-rgba02);
+  animation: gentlePulse 2.5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-login-card::after {
@@ -148,6 +151,23 @@
 
 .btn-login-card:active {
   transform: scale(0.95);
+  animation: none;
+}
+
+/* 登录按钮涟漪 */
+.btn-login-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0s;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.btn-login-card:active::before {
+  opacity: 1;
 }
 
 .btn-logout {
@@ -163,7 +183,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-logout::after {
@@ -171,8 +191,9 @@
 }
 
 .btn-logout:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
   box-shadow: var(--shadow-hover);
+  background: #FDF2F0;
 }
 
 /* ===== 注册弹窗 ===== */

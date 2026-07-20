@@ -4,6 +4,7 @@
   padding: 24px;
   min-height: 100vh;
   box-sizing: border-box;
+  position: relative;
 }
 
 /* 顶部信息 */
@@ -42,6 +43,8 @@
   border-radius: var(--radius);
   background: linear-gradient(135deg, #F0F8FB, #FFFFFF);
   box-shadow: 0 4px 20px var(--primary-rgba01);
+  position: relative;
+  z-index: 2;
 }
 
 .score-number {
@@ -49,6 +52,8 @@
   font-weight: 800;
   color: #1A2A3A;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: none;
 }
 
 .score-unit {
@@ -61,6 +66,14 @@
   padding: 8rpx 32rpx;
   border-radius: 50rpx;
   margin: 12rpx 0;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.score-badge.badge-pop {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .score-badge text {
@@ -74,6 +87,17 @@
   color: var(--primary);
   margin-top: 8rpx;
   font-weight: 500;
+}
+
+/* 撒花 Canvas */
+.confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
 }
 
 /* 区域标题 */
@@ -101,6 +125,14 @@
   background: var(--white);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(20rpx);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dimension-item.dim-reveal {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .dimension-header {
@@ -131,7 +163,8 @@
 .dimension-bar {
   height: 100%;
   border-radius: 6rpx;
-  transition: width 0.6s ease;
+  width: 0;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* 雷达图 */
@@ -215,7 +248,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .action-btn::after {
@@ -224,6 +257,7 @@
 
 .action-btn:active {
   transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .action-btn.primary {

@@ -84,6 +84,10 @@ Page({
     const { type } = e.currentTarget.dataset;
     const key = `groupExpand.${type}`;
     this.setData({ [key]: !this.data.groupExpand[type] });
+    // 展开后延迟重绘雷达图（防止布局变化导致canvas错位）
+    if (this.data.radarData) {
+      setTimeout(() => this.drawRadar(), 450);
+    }
   },
 
   aggregateRadarData(records) {

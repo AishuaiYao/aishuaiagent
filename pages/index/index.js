@@ -8,13 +8,16 @@ Page({
     currentBaby: null,
     babyAge: 0,
     recentRecords: [],
-    theme: {}
+    theme: {},
+    entered: false
   },
 
   async onShow() {
     this.setData({ theme: app.getTheme() });
     await this.loadBaby();
     this.loadRecords();
+    // 触发入场动画
+    setTimeout(() => { this.setData({ entered: true }); }, 50);
   },
 
   /** 加载当前宝宝信息（从真实数据源校验） */

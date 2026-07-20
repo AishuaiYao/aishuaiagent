@@ -115,6 +115,7 @@
   background: #F0F8FB;
   color: #5A9BAB;
   font-weight: 600;
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* 时间线 */
@@ -261,7 +262,17 @@
   transform: rotate(90deg);
 }
 
+/* 文件夹内容区域 - 高度过渡 */
 .folder-body {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.folder-body.show {
+  max-height: 2000rpx;
+  opacity: 1;
   padding: 0 24rpx 16rpx 8rpx;
 }
 

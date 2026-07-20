@@ -9,6 +9,7 @@ Page({
     completedAt: '',
     babyAge: 0,
     overallScore: 0,
+    displayScore: 0,       // 动画显示的分数（从0滚到真实值）
     scoreLevel: '',
     badgeColor: '',
     compareText: '',
@@ -17,7 +18,10 @@ Page({
     dimensionList: [],
     dimensionsData: null,
     recordId: '',
-    theme: {}
+    theme: {},
+    showConfetti: false,   // 撒花
+    showBadge: false,      // 徽章弹入
+    dimsRevealed: false    // 维度条展示
   },
 
   async onLoad(options) {
@@ -146,13 +150,126 @@ Page({
       dimensionsData: dimensions
     });
 
+    // 动画序列: 分数滚动 → 徽章弹入 → 撒花
+    this.animateScore(overallScore);
+
     // 查找历史记录进行比较
     this.loadHistoryCompare(type);
 
     // 延迟绘制雷达图
     if (dimensions) {
-      setTimeout(() => this.drawRadar(), 500);
+      setTimeout(() => this.drawRadar(), 800);
     }
+  },
+
+  /** 分数计数动画 */
+  animateScore(target) {
+    const duration = 1200; // 动画总时长 ms
+    const startTime = Date.now();
+
+    const step = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOutCubic 缓动
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+
+      this.setData({ displayScore: current });
+
+      if (progress < 1) {
+        // 使用 setTimeout 代替 requestAnimationFrame 确保小程序兼容
+        setTimeout(step, 16);
+      } else {
+        // 分数动画完成 → 弹出徽章
+        setTimeout(() => {
+          this.setData({ showBadge: true });
+          // 徽章弹出后 → 撒花
+          setTimeout(() => {
+            this.setData({ showConfetti: true });
+            this.startConfetti();
+            // 维度条依次展开
+            setTimeout(() => {
+              this.setData({ dimsRevealed: true });
+            }, 300);
+          }, 400);
+        }, 200);
+      }
+    };
+
+    step();
+  },
+
+  /** 撒花庆祝动画 */
+  startConfetti() {
+    const query = wx.createSelectorQuery();
+    query.select('#confettiCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0] || !res[0].node) return;
+        const canvas = res[0].node;
+        const ctx = canvas.getContext('2d');
+        const dpr = wx.getSystemInfoSync().pixelRatio;
+        const W = res[0].width;
+        const H = res[0].height;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.scale(dpr, dpr);
+
+        const particles = [];
+        const colors = ['#FFD3B4', '#A8D8EA', '#C7CEEA', '#FFB7C5', '#B5E0D0', '#FDE0EC', '#FFEAA7', '#D6EEF5'];
+        const maxParticles = 40;
+
+        for (let i = 0; i < maxParticles; i++) {
+          particles.push({
+            x: Math.random() * W,
+            y: Math.random() * H * 0.5 - H * 0.3,
+            vx: (Math.random() - 0.5) * 4,
+            vy: Math.random() * 2 + 1,
+            size: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 10,
+            opacity: Math.random() * 0.6 + 0.4
+          });
+        }
+
+        let animFrame;
+        const animate = () => {
+          ctx.clearRect(0, 0, W, H);
+
+          let alive = 0;
+          for (const p of particles) {
+            if (p.y > H + 20 || p.opacity <= 0.02) continue;
+            alive++;
+
+            p.x += p.vx;
+            p.vy += 0.08; // 重力
+            p.y += p.vy;
+            p.rotation += p.rotSpeed;
+            p.opacity -= 0.003;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.globalAlpha = Math.max(p.opacity, 0);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            ctx.restore();
+          }
+
+          if (alive > 0) {
+            animFrame = setTimeout(animate, 32);
+          }
+        };
+
+        animate();
+
+        // 2秒后清理
+        setTimeout(() => {
+          if (animFrame) clearTimeout(animFrame);
+          ctx.clearRect(0, 0, W, H);
+        }, 2500);
+      });
   },
 
   /** 加载历史对比 */

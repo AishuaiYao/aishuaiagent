@@ -60,6 +60,10 @@
   border-radius: var(--radius);
 }
 
+.baby-header:active {
+  transform: scale(0.97);
+}
+
 .baby-avatar-wrap {
   display: flex;
   align-items: center;
@@ -77,6 +81,7 @@
   background: rgba(255, 255, 255, 0.75);
   border-radius: 50%;
   box-shadow: 0 4px 16px var(--primary-rgba025);
+  animation: gentlePulse 3s ease-in-out infinite;
 }
 
 .baby-avatar-img {
@@ -125,6 +130,12 @@
   font-weight: 500;
 }
 
+.welcome-emoji {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+  margin-left: 4rpx;
+}
+
 /* 快捷测试卡片 */
 .quick-scroll {
   white-space: nowrap;
@@ -147,13 +158,23 @@
   background: var(--white);
   border: none;
   box-shadow: var(--shadow);
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: normal;
+  position: relative;
+  overflow: hidden;
 }
 
 .quick-card:active {
-  transform: scale(0.95);
+  transform: scale(0.93);
   box-shadow: var(--shadow-hover);
+}
+
+.quick-card .quick-icon {
+  transition: transform 0.3s ease;
+}
+
+.quick-card:active .quick-icon {
+  transform: scale(1.2);
 }
 
 .quick-card.attention {
@@ -225,10 +246,11 @@
   padding: 24rpx;
   border-radius: var(--radius);
   margin-bottom: 12rpx;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .record-item:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
   box-shadow: var(--shadow-hover);
 }
 
@@ -240,6 +262,11 @@
 .record-icon {
   font-size: 40rpx;
   margin-right: 16rpx;
+  transition: transform 0.3s ease;
+}
+
+.record-item:active .record-icon {
+  transform: scale(1.2);
 }
 
 .record-info {

@@ -163,12 +163,14 @@
   align-items: center;
   justify-content: center;
   z-index: 100;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: floatLight 2.5s ease-in-out infinite;
 }
 
 .fab:active {
-  transform: scale(0.9);
+  transform: scale(0.85);
   box-shadow: 0 4px 12px var(--primary-rgba025);
+  animation: none;
 }
 
 .fab-icon {

@@ -15,7 +15,9 @@ Page({
     answers: {},
     progress: 0,
     isLastQuestion: false,
-    theme: {}
+    theme: {},
+    animDirection: 'right',  // right/left 滑动方向
+    animKey: 0               // 用于触发重新渲染
   },
 
   onLoad(options) {
@@ -74,6 +76,8 @@ Page({
     const progress = Math.round((prevIndex / this.data.totalQuestions) * 100);
 
     this.setData({
+      animDirection: 'left',
+      animKey: this.data.animKey + 1,
       currentIndex: prevIndex,
       currentQuestion: questions[prevIndex],
       selectedValue: this.data.answers[`q${prevIndex}`] || null,
@@ -91,6 +95,8 @@ Page({
     const progress = Math.round((nextIndex / this.data.totalQuestions) * 100);
 
     this.setData({
+      animDirection: 'right',
+      animKey: this.data.animKey + 1,
       currentIndex: nextIndex,
       currentQuestion: questions[nextIndex],
       selectedValue: this.data.answers[`q${nextIndex}`] || null,

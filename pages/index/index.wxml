@@ -1,7 +1,7 @@
 <!-- 首页 -->
 <view class="page-container" style="--primary: {{theme.primary}}; --primary-light: {{theme.primaryLight}}; --secondary: {{theme.secondary}}; --accent: {{theme.accent}}; --accent-light: {{theme.accentLight}}; --primary-rgba02: {{theme.primaryRgba02}}; --primary-rgba015: {{theme.primaryRgba015}}; --primary-rgba01: {{theme.primaryRgba01}}; --primary-rgba025: {{theme.primaryRgba025}}; --primary-rgba035: {{theme.primaryRgba035}}; --primary-rgba018: {{theme.primaryRgba018}}; --secondary-rgba01: {{theme.secondaryRgba01}}; --secondary-rgba015: {{theme.secondaryRgba015}};">
   <!-- 自定义导航栏 -->
-  <view class="nav-bar">
+  <view class="nav-bar anim-enter anim-delay-1">
     <view class="nav-bar-left" bind:tap="openDrawer">
       <view class="hamburger">
         <view class="hamburger-line"></view>
@@ -14,7 +14,7 @@
   </view>
 
   <!-- 当前宝宝信息 -->
-  <view class="baby-header card">
+  <view class="baby-header card anim-enter anim-delay-2">
     <view class="baby-avatar-wrap" wx:if="{{currentBaby}}">
       <image wx:if="{{currentBaby.avatar}}" class="baby-avatar-img" src="{{currentBaby.avatar}}" mode="aspectFill"></image>
       <view wx:else class="baby-avatar">{{currentBaby.gender === 'male' ? '👦' : currentBaby.gender === 'female' ? '👧' : '👶'}}</view>
@@ -29,28 +29,28 @@
   </view>
 
   <!-- 欢迎语 -->
-  <view class="welcome-text">今天想测测宝宝的什么呢？✨</view>
+  <view class="welcome-text anim-enter anim-delay-3">今天想测测宝宝的什么呢？<text class="welcome-emoji">✨</text></view>
 
   <!-- 快捷测试入口 -->
-  <view class="quick-tests">
+  <view class="quick-tests anim-enter anim-delay-4">
     <scroll-view scroll-x class="quick-scroll" show-scrollbar="{{false}}">
       <view class="quick-cards">
-        <view class="quick-card attention" bind:tap="goQuiz" data-type="attention">
+        <view class="quick-card attention anim-enter-scale" style="animation-delay: 0.15s;" bind:tap="goQuiz" data-type="attention">
           <text class="quick-icon">🔍</text>
           <text class="quick-name">注意力测试</text>
           <text class="quick-desc">评估专注力水平</text>
         </view>
-        <view class="quick-card attachment" bind:tap="goQuiz" data-type="attachment">
+        <view class="quick-card attachment anim-enter-scale" style="animation-delay: 0.22s;" bind:tap="goQuiz" data-type="attachment">
           <text class="quick-icon">💕</text>
           <text class="quick-name">亲子依恋测试</text>
           <text class="quick-desc">了解亲密关系</text>
         </view>
-        <view class="quick-card temperament" bind:tap="goQuiz" data-type="temperament">
+        <view class="quick-card temperament anim-enter-scale" style="animation-delay: 0.29s;" bind:tap="goQuiz" data-type="temperament">
           <text class="quick-icon">🌈</text>
           <text class="quick-name">气质类型测试</text>
           <text class="quick-desc">发现天生性格</text>
         </view>
-        <view class="quick-card more" bind:tap="goTests">
+        <view class="quick-card more anim-enter-scale" style="animation-delay: 0.36s;" bind:tap="goTests">
           <text class="quick-icon">📋</text>
           <text class="quick-name">更多测试</text>
           <text class="quick-desc">查看全部 →</text>
@@ -60,19 +60,20 @@
   </view>
 
   <!-- 最近记录 -->
-  <view class="section">
+  <view class="section anim-enter anim-delay-5">
     <view class="section-header">
       <text class="section-title">最近记录</text>
       <text class="section-more" bind:tap="goDashboard" wx:if="{{recentRecords.length > 0}}">查看全部 →</text>
     </view>
     <view class="record-list" wx:if="{{recentRecords.length > 0}}">
       <view
-        class="record-item card"
+        class="record-item card anim-enter"
         wx:for="{{recentRecords}}"
         wx:key="_id"
         bind:tap="goResult"
         data-id="{{item._id}}"
         data-type="{{item.testType}}"
+        style="animation-delay: {{0.1 * (index + 1)}}s;"
       >
         <view class="record-left">
           <text class="record-icon">

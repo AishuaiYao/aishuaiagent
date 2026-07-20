@@ -72,7 +72,21 @@
   padding: 28rpx 40rpx;
   transition: all 0.2s ease;
   position: relative;
+  opacity: 0;
+  transform: translateX(-20rpx);
 }
+
+.drawer.show .drawer-item {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer.show .drawer-item:nth-child(1) { transition-delay: 0.08s; }
+.drawer.show .drawer-item:nth-child(2) { transition-delay: 0.14s; }
+.drawer.show .drawer-item:nth-child(3) { transition-delay: 0.20s; }
+.drawer.show .drawer-item:nth-child(4) { transition-delay: 0.26s; }
+.drawer.show .drawer-item:nth-child(5) { transition-delay: 0.32s; }
 
 .drawer-item.active {
   background: linear-gradient(90deg, var(--primary-rgba018), transparent);
